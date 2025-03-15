@@ -21,6 +21,6 @@ export class Database {
       user: process.env.MONGO_USER,
       pass: process.env.MONGO_PASS
     })
-    console.log('Kết nối database thành công')
+    console.log('Connect to database successfully')
   }
 }
