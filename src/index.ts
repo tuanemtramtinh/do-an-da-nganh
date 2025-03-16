@@ -2,6 +2,7 @@ import express, { Application } from 'express'
 import dotenv from 'dotenv'
 import { routeClient } from './routes/client/index.route'
 import { Database } from './configs/config'
+import cookieParser from 'cookie-parser'
 
 dotenv.config()
 
@@ -13,6 +14,7 @@ const main = async () => {
 
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
+  app.use(cookieParser())
 
   routeClient(app)
 
