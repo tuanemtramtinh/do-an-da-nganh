@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import { routeClient } from './routes/client/index.route'
 import { Database } from './configs/config'
 import cookieParser from 'cookie-parser'
+import cors from 'cors'
 
 dotenv.config()
 
@@ -15,6 +16,7 @@ const main = async () => {
   app.use(express.json())
   app.use(express.urlencoded({ extended: false }))
   app.use(cookieParser())
+  app.use(cors())
 
   routeClient(app)
 
