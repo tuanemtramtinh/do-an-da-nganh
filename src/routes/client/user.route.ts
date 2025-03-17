@@ -6,7 +6,7 @@ import { UserService } from '~/services/user.service'
 
 const router: Router = express.Router()
 
-const authService = AuthService.getInstance()
+const authService = new AuthService()
 const userService = new UserService(User, authService)
 const userController = new UserController(userService)
 
