@@ -36,6 +36,7 @@
     "typescript-eslint": "^8.24.1"
   },
   "dependencies": {
+    "@littlefattie/solve-equations": "^1.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",

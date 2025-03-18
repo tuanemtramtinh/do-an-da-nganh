@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose'
 
-const engineSchema = new Schema(
+const engineSchema = new Schema<any>(
   {
     // kieu_dong_co: String,
     // cong_suat_kW: Number,
@@ -18,5 +18,5 @@ const engineSchema = new Schema(
   }
 )
 
-const Engine = mongoose.model('engine', engineSchema)
+const Engine = mongoose.model<any>('engine', engineSchema)
 export default Engine

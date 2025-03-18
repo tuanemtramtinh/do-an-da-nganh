@@ -11,12 +11,20 @@ export class CalculateController extends Controller {
     this.calculateService = calculateService
   }
 
-  public saveInput = async (req: Request, res: Response) => {
-    const test = await this.calculateService.test(req.body)
-    console.log(test)
-    res.json('hello world')
+  public chooseEngine = async (req: Request, res: Response) => {
+    const result = await this.calculateService.chooseEngine(req.body)
+    console.log(result)
+    this.successMessage(res, 'Lưu input và trả ra danh sách động cơ thành công', result)
+  }
 
-    // const data: IInputData = await this.calculateService.saveInput(req.body)
-    // this.successMessage(res, 'Lưu dữ liệu thành công', data)
+  public engineCharacteristic = async (req: Request, res: Response) => {
+    try {
+      const inputId = req.body.inputId
+      const engineId = req.body.engineId
+      const result = await this.calculateService.engineCharacteristics(inputId, engineId)
+      this.successMessage(res, 'Tính toán thành công', result)
+    } catch (error: any) {
+      this.failedMessage(res, error.message)
+    }
   }
 }
