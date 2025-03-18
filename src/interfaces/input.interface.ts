@@ -1,3 +1,5 @@
+import mongoose from "mongoose"
+
 export interface IInputData {
   F: number //Lực vòng trên xích tải
   v: number //Vận tốc xích tải
@@ -8,4 +10,5 @@ export interface IInputData {
   t2: number //Chế độ tải
   T1: number //Chế độ tải
   T2: number //Chế độ tải
+  _id?: mongoose.Schema.Types.ObjectId
 }

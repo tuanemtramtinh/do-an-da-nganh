@@ -12,7 +12,7 @@ const chapter1Handler = new Chapter1Handler()
 const calculateService = new CalculateService(Input, Chapter1, chapter1Handler)
 const calculateController = new CalculateController(calculateService)
 
-// router.post('/input', inputRequestValidate, calculateController.saveInput)
+router.post('/input', inputRequestValidate, calculateController.saveInput)
 
 router.post('/chapter-1/stage-1', calculateController.chooseEngine)
 

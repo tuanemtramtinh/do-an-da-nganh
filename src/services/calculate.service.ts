@@ -15,26 +15,29 @@ export class CalculateService {
     this.chapter1Handler = chapter1Handler
   }
 
-  // public saveInput = async (data: IInputData) => {
-  //   const newInput = await this.Input.create(data)
-  //   return newInput
-  // }
+  public saveInput = async (data: IInputData) => {
+    const newInput = await this.Input.create(data)
+    return newInput
+  }
 
   //Chapter 1 - Stage 1
-  public chooseEngine = async (data: IInputData) => {
+  public chooseEngine = async (inputId: mongoose.Schema.Types.ObjectId) => {
     //Lưu input người dùng nhập
-    const newInput = await this.Input.create(data)
-    const stage1Result: any = await this.chapter1Handler.stage1(newInput)
+    const input: IInputData | null = await this.Input.findById(inputId)
+    if (!input) {
+      throw Error('Input Id không hợp lệ')
+    }
+    const stage1Result: any = await this.chapter1Handler.stage1(input)
     const n_lv = stage1Result.n_lv
     const P_td = stage1Result.P_td
     const engines = stage1Result.engines
     const chapter1 = new this.Chapter1()
-    chapter1.inputId = newInput._id
+    chapter1.inputId = input._id
     chapter1.n_lv = n_lv
     chapter1.P_td = P_td
     await chapter1.save()
     return {
-      inputId: newInput.id,
+      inputId: input._id,
       engines
     }
   }
