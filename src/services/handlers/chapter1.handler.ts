@@ -66,15 +66,34 @@ export class Chapter1Handler /*extends AbstractHandler*/ {
 
   //1.4 Chọn động cơ
   public chooseEngine = async (P_ct: number, n_sb: number) => {
-    const tolerance = 0.4 //Sai số cho phép
+    // const tolerance = 0.4 //Sai số cho phép
+    // const engines = await Engine.find({
+    //   cong_suat_kW: { $gte: P_ct },
+    //   $expr: {
+    //     $lte: [{ $abs: { $subtract: ['$van_toc_quay_vgph', n_sb] } }, n_sb * tolerance]
+    //   }
+    // })
+
+    // return engines
     const engines = await Engine.find({
-      cong_suat_kW: { $gte: P_ct },
       $expr: {
-        $lte: [{ $abs: { $subtract: ['$van_toc_quay_vgph', n_sb] } }, n_sb * tolerance]
+        $gte: [{ $subtract: ['$cong_suat_kW', P_ct] }, 0]
       }
     })
-
-    return engines
+      .sort({ cong_suat_kW: 1 })
+      .lean()
+    const firstEnginePower = engines[0].cong_suat_kW
+    const filterEngines = engines.filter((engine) => engine.cong_suat_kW === firstEnginePower)
+    let minN = 999999
+    let choosenEngine
+    for (const engine of filterEngines) {
+      const n = engine.van_toc_quay_vgph
+      if (Math.abs(n - n_sb) < minN) {
+        minN = Math.abs(n - n_sb)
+        choosenEngine = engine
+      }
+    }
+    return choosenEngine
   }
 
   public stage1 = async (input: IInputData): Promise<object | null> => {
