@@ -12,7 +12,11 @@ export class CalculateController extends Controller {
   }
 
   public saveInput = async (req: Request, res: Response) => {
-    const result = await this.calculateService.saveInput(req.body)
+    const data = {
+      ...req.body,
+      userId: req.user?._id
+    }
+    const result = await this.calculateService.saveInput(data)
     this.successMessage(res, 'Lưu dữ liệu input thành công', result)
   }
 

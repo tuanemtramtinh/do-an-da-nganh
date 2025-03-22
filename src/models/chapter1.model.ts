@@ -2,8 +2,14 @@ import mongoose, { Schema } from 'mongoose'
 
 const chapter1Schema = new Schema<any>(
   {
-    inputId: mongoose.Schema.Types.ObjectId,
-    engineId: mongoose.Schema.Types.ObjectId,
+    inputId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'input'
+    },
+    engineId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'engine'
+    },
     n_lv: Number,
     P_td: Number,
     P_dc: Number,

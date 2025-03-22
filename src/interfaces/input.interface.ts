@@ -1,4 +1,4 @@
-import mongoose from "mongoose"
+import mongoose from 'mongoose'
 
 export interface IInputData {
   F: number //Lực vòng trên xích tải
@@ -11,4 +11,5 @@ export interface IInputData {
   T1: number //Chế độ tải
   T2: number //Chế độ tải
   _id?: mongoose.Schema.Types.ObjectId
+  userId: mongoose.Schema.Types.ObjectId
 }

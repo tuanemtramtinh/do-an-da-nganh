@@ -11,7 +11,8 @@ const inputSchema = new Schema<IInputData>(
     t1: { type: Number, required: true },
     t2: { type: Number, required: true },
     T1: { type: Number, required: true },
-    T2: { type: Number, required: true }
+    T2: { type: Number, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'user' }
   },
   {
     timestamps: true

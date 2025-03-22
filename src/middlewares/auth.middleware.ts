@@ -3,7 +3,7 @@ import User from '~/models/user.model'
 import { AuthService } from '~/services/auth.service'
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
-  const authService = AuthService.getInstance()
+  const authService = new AuthService()
 
   if (!req.headers.authorization || req.headers.authorization.split(' ')[0] !== 'Bearer') {
     res.status(400).json({ code: 'no_access_token', message: 'Vui lòng cung cấp AccessToken' })
