@@ -1,5 +1,4 @@
 import { Request, Response } from 'express'
-import { IInputData } from '~/interfaces/input.interface'
 import { CalculateService } from '~/services/calculate.service'
 import { Controller } from '../index.controller'
 
@@ -32,6 +31,16 @@ export class CalculateController extends Controller {
       const engineId = req.body.engineId
       const result = await this.calculateService.engineCharacteristics(inputId, engineId)
       this.successMessage(res, 'Tính toán thành công', result)
+    } catch (error: any) {
+      this.failedMessage(res, error.message)
+    }
+  }
+
+  public getChapter1 = async (req: Request, res: Response) => {
+    try {
+      const inputId: any = req.query.inputId
+      const result = await this.calculateService.getChapter1(inputId)
+      this.successMessage(res, 'Lấy chương 1 thành công', result)
     } catch (error: any) {
       this.failedMessage(res, error.message)
     }

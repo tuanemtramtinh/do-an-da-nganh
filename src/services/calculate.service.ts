@@ -17,6 +17,10 @@ export class CalculateService {
 
   public saveInput = async (data: IInputData) => {
     const newInput = await this.Input.create(data)
+    const chapter1 = new this.Chapter1()
+    chapter1.inputId = newInput._id
+    chapter1.status = 'initial'
+    await chapter1.save()
     return newInput
   }
 
@@ -31,11 +35,20 @@ export class CalculateService {
     const n_lv = stage1Result.n_lv
     const P_td = stage1Result.P_td
     const engines = stage1Result.engines
-    const chapter1 = new this.Chapter1()
-    chapter1.inputId = input._id
-    chapter1.n_lv = n_lv
-    chapter1.P_td = P_td
-    await chapter1.save()
+    await this.Chapter1.updateOne(
+      {
+        inputId: inputId
+      },
+      {
+        n_lv: n_lv,
+        P_td: P_td,
+        status: 'processing'
+      }
+    )
+
+    // chapter1.n_lv = n_lv
+    // chapter1.P_td = P_td
+    // chapter1.status = 'processing'
     return {
       inputId: input._id,
       engines
@@ -58,17 +71,32 @@ export class CalculateService {
     }
 
     const result = this.chapter1Handler.stage2(currentChapter1.n_lv, currentChapter1.P_td, engine)
-
     const chapter1 = await this.Chapter1.findOneAndUpdate(
       {
         inputId: inputId
       },
-      result,
+      {
+        ...result,
+        engineId: engineId,
+        status: 'finish'
+      },
       {
         new: true
       }
     )
-
     return chapter1
+  }
+
+  //Get Chapter 1
+  public getChapter1 = async (inputId: mongoose.Schema.Types.ObjectId) => {
+    const chapter1 = await this.Chapter1.findOne({
+      inputId: inputId
+    }).populate('engineId')
+
+    if (chapter1) {
+      return chapter1
+    } else {
+      throw Error('Chưa tồn tại Chương 1 với inputId này')
+    }
   }
 }

@@ -19,5 +19,7 @@ router.post('/chapter-1/stage-1', calculateController.chooseEngine)
 
 router.post('/chapter-1/stage-2', calculateController.engineCharacteristic)
 
+router.get('/chapter-1', calculateController.getChapter1)
+
 const calculateRouter = router
 export default calculateRouter

@@ -43,4 +43,14 @@ export class UserController extends Controller {
       this.failedMessage(res, error.message)
     }
   }
+
+  public getUserHistory = async (req: Request, res: Response) => {
+    try {
+      const userId = (mongoose.Schema.Types.ObjectId = req.user?._id)
+      const historyList = await this.userService.history(userId)
+      this.successMessage(res, 'Lấy danh sách lịch sử thành công', historyList)
+    } catch (error: any) {
+      this.failedMessage(res, error.message)
+    }
+  }
 }

@@ -12,4 +12,6 @@ export interface IInputData {
   T2: number //Chế độ tải
   _id?: mongoose.Schema.Types.ObjectId
   userId: mongoose.Schema.Types.ObjectId
+  createdAt?: Date
+  updatedAt?: Date
 }

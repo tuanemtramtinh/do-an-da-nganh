@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Báo Cáo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+        position: relative;
+      }
+      .header,
+      .footer {
+        text-align: center;
+        padding: 10px;
+        background-color: #f4f4f4;
+        position: fixed;
+        width: 100%;
+      }
+      .header {
+        top: 0;
+        left: 0;
+      }
+      .footer {
+        bottom: 0;
+        left: 0;
+      }
+      .report-container {
+        max-width: 800px;
+        margin: 60px auto 60px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background: white;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h2>Công ty XYZ - Báo Cáo Kỹ Thuật</h2>
+    </div>
+
+    <div class="report-container">
+      <h1>BÁO CÁO</h1>
+
+      <h2>Mục 1: Động cơ phù hợp</h2>
+      <table>
+        <tr>
+          <th>Mã số động cơ</th>
+          <th>Công suất (kW)</th>
+          <th>Vận tốc (vg/phút)</th>
+          <th>Hiệu suất (%)</th>
+        </tr>
+        <tr>
+          <td class="engine-code">DC1234</td>
+          <td class="engine-power">15</td>
+          <td class="engine-speed">1500</td>
+          <td class="engine-open">92</td>
+        </tr>
+      </table>
+
+      <h2>Mục 2: Kết quả tính toán</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Thông số</th>
+            <th>Động cơ</th>
+            <th>Trục I</th>
+            <th colspan="2">Trục II</th>
+            <th colspan="2">Trục II</th>
+            <th colspan="2">Trục III</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>P (kW)</td>
+            <td class="P_dc">10.5</td>
+            <td class="P_I">8.2</td>
+            <td class="P_II" colspan="4">7.5</td>
+            <td class="P_III">6.9</td>
+          </tr>
+          <tr>
+            <td>n (vg/phút)</td>
+            <td class="n_dc">1450</td>
+            <td class="n_I">1350</td>
+            <td class="n_II" colspan="4">1300</td>
+            <td class="n_III">1250</td>
+          </tr>
+          <tr>
+            <td>u</td>
+            <td class="u_dc">1.5</td>
+            <td class="u_I_II" colspan="3">2.0</td>
+            <td class="u_II_III" colspan="3">2.2</td>
+          </tr>
+          <tr>
+            <td>T (N.mm)</td>
+            <td class="T_dc">320</td>
+            <td class="T_I">290</td>
+            <td class="T_II" colspan="4">275</td>
+            <td class="T_III">260</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <p>© 2025 Công ty XYZ - Mọi quyền được bảo lưu.</p>
+    </div>
+  </body>
+</html>

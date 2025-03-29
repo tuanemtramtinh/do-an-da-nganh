@@ -4,6 +4,7 @@ import calculateRouter from './calculate.route'
 import engineRouter from './engine.route'
 import userRouter from './user.route'
 import { authMiddleware } from '~/middlewares/auth.middleware'
+import exportRouter from './export.route'
 
 export const routeClient = (app: Application) => {
   app.get('/', authMiddleware, (req: Request, res: Response): any => {
@@ -13,4 +14,5 @@ export const routeClient = (app: Application) => {
   app.use('/calculate', calculateRouter)
   app.use('/engine', engineRouter)
   app.use('/user', userRouter)
+  app.use('/export', exportRouter)
 }
