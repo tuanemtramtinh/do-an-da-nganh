@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { CalculateService } from '~/services/calculate.service'
 import { Controller } from '../index.controller'
+import mongoose from 'mongoose'
 
 export class CalculateController extends Controller {
   private calculateService: CalculateService
@@ -38,9 +39,37 @@ export class CalculateController extends Controller {
 
   public getChapter1 = async (req: Request, res: Response) => {
     try {
-      const inputId: any = req.query.inputId
-      const result = await this.calculateService.getChapter1(inputId)
+      const inputId = req.query.inputId
+
+      if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
+        this.failedMessage(res, 'Invalid inputId')
+        return
+      }
+
+      const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
+
+      const result = await this.calculateService.getChapter1(inputObjectId)
       this.successMessage(res, 'Lấy chương 1 thành công', result)
+    } catch (error: any) {
+      this.failedMessage(res, error.message)
+    }
+  }
+
+  public handleChapter2 = async (req: Request, res: Response) => {
+    try {
+      const inputId = req.query.inputId
+
+      if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
+        this.failedMessage(res, 'Invalid inputId')
+        return
+      }
+
+      const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
+      let result = await this.calculateService.getChapter2(inputObjectId)
+      if (!result) {
+        result = await this.calculateService.handleChapter2(inputObjectId)
+      }
+      this.successMessage(res, 'Tính toán chương 2 thành công', result)
     } catch (error: any) {
       this.failedMessage(res, error.message)
     }

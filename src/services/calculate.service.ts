@@ -1,17 +1,19 @@
 import mongoose, { Model } from 'mongoose'
 import { IInputData } from '~/interfaces/input.interface'
-// import { CalculateHandler } from './handlers/calculate.handler'
 import { Chapter1Handler } from './handlers/chapter1.handler'
 import Engine from '~/models/engine.model'
+import { Chapter2Handler } from './handlers/chapter2/chapter2.handler'
 
 export class CalculateService {
   private Input //Model
   private Chapter1 //Model
+  private Chapter2 //Model
   private chapter1Handler: Chapter1Handler
 
-  constructor(Input: Model<IInputData>, Chapter1: Model<any>, chapter1Handler: Chapter1Handler) {
+  constructor(Input: Model<IInputData>, Chapter1: Model<any>, Chapter2: Model<any>, chapter1Handler: Chapter1Handler) {
     this.Input = Input
     this.Chapter1 = Chapter1
+    this.Chapter2 = Chapter2
     this.chapter1Handler = chapter1Handler
   }
 
@@ -25,7 +27,7 @@ export class CalculateService {
   }
 
   //Chapter 1 - Stage 1
-  public chooseEngine = async (inputId: mongoose.Schema.Types.ObjectId) => {
+  public chooseEngine = async (inputId: mongoose.Types.ObjectId) => {
     //Lưu input người dùng nhập
     const input: IInputData | null = await this.Input.findById(inputId)
     if (!input) {
@@ -56,10 +58,7 @@ export class CalculateService {
   }
 
   //Chapter 1 - Stage 2
-  public engineCharacteristics = async (
-    inputId: mongoose.Schema.Types.ObjectId,
-    engineId: mongoose.Schema.Types.ObjectId
-  ) => {
+  public engineCharacteristics = async (inputId: mongoose.Types.ObjectId, engineId: mongoose.Types.ObjectId) => {
     const engine = await Engine.findById(engineId)
 
     const currentChapter1 = await this.Chapter1.findOne({
@@ -88,7 +87,7 @@ export class CalculateService {
   }
 
   //Get Chapter 1
-  public getChapter1 = async (inputId: mongoose.Schema.Types.ObjectId) => {
+  public getChapter1 = async (inputId: mongoose.Types.ObjectId) => {
     const chapter1 = await this.Chapter1.findOne({
       inputId: inputId
     }).populate('engineId')
@@ -98,5 +97,49 @@ export class CalculateService {
     } else {
       throw Error('Chưa tồn tại Chương 1 với inputId này')
     }
+  }
+
+  public handleChapter2 = async (inputId: mongoose.Types.ObjectId) => {
+    const input = await this.Input.findById(inputId)
+
+    if (!input) {
+      throw Error('InputId không hợp lệ')
+    }
+
+    const chapter1Result = await this.Chapter1.findOne({
+      inputId
+    }).populate('engineId')
+
+    const chapter2Handler = new Chapter2Handler(input, chapter1Result)
+    const result = chapter2Handler.run()
+
+    const chapter2 = new this.Chapter2()
+
+    chapter2.inputId = inputId
+    chapter2.beltParamaters = result.beltParameters
+    chapter2.gearSpecification = result.gearSpecification
+    chapter2.sizeOfTranmission = result.sizeOfTranmission
+
+    await chapter2.save()
+
+    return {
+      beltParamaters: result.beltParameters,
+      gearSpecification: result.gearSpecification,
+      sizeOfTranmission: result.sizeOfTranmission
+    }
+  }
+
+  public getChapter2 = async (inputId: mongoose.Types.ObjectId) => {
+    const input = await this.Input.findById(inputId)
+
+    if (!input) {
+      throw Error('InputId không hợp lệ')
+    }
+
+    const chapter2 = await this.Chapter2.findOne({
+      inputId
+    })
+
+    return chapter2
   }
 }

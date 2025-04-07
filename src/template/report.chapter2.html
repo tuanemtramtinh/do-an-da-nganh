@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Báo Cáo</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        padding: 20px;
+        position: relative;
+      }
+      .header,
+      .footer {
+        text-align: center;
+        padding: 10px;
+        background-color: #f4f4f4;
+        position: fixed;
+        width: 100%;
+      }
+      .header {
+        top: 0;
+        left: 0;
+      }
+      .footer {
+        bottom: 0;
+        left: 0;
+      }
+      .report-container {
+        max-width: 800px;
+        margin: 60px auto 60px;
+        padding: 20px;
+        border: 1px solid #ddd;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background: white;
+      }
+      h1,
+      h2 {
+        text-align: center;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+      table,
+      th,
+      td {
+        border: 1px solid #ddd;
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h2>Công ty XYZ - Báo Cáo Kỹ Thuật</h2>
+    </div>
+
+    <div class="report-container">
+      <h1>BÁO CÁO</h1>
+
+      <!-- New Table 1: Belt Parameters -->
+      <h2>Bảng thông số của bộ truyền đai thang</h2>
+      <table style="table-layout: fixed;">
+        <thead> 
+          <tr> 
+            <th>Thông số</th>
+            <th>Trị số</th>
+          </tr>
+        </thead>
+        <tbody> 
+          <tr> 
+            <td> <span>Đường kính bánh đai nhỏ: d</span><sub>1 </sub><span>(mm)</span></td>
+            <td>${beltParameters.d1}</td>
+          </tr>
+          <tr>
+            <td> <span>Đường kính bánh đai nhỏ: d</span><sub>2 </sub><span>(mm)</span></td>
+            <td>${beltParameters.d2}</td>
+          </tr>
+          <tr> 
+            <td>Khoảng cách trục: a (mm)</td>
+            <td>${beltParameters.a}</td>
+          </tr>
+          <tr> 
+            <td>Chiều dài đai: L (mm)</td>
+            <td>${beltParameters.L}</td>
+          </tr>
+          <tr> 
+            <td>Góc ôm đai: (độ)</td>
+            <td>${beltParameters.goc_om_dai}</td>
+          </tr>
+          <tr> 
+            <td>Số đai: z</td>
+            <td>${beltParameters.z}</td>
+          </tr>
+          <tr> 
+            <td>Chiều rộng đai: B (mm)</td>
+            <td>${beltParameters.B}</td>
+          </tr>
+          <tr> 
+            <td><span>Lực căng ban đầu: F</span><sub>0 </sub><span>(N)</span></td>
+            <td>${beltParameters.F0}</td>
+          </tr>
+          <tr> 
+            <td><span>Lực căng ban đầu: F</span><sub>r</sub><span>(N)</span></td>
+            <td>${beltParameters.Fr}</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- New Table 2: Gear Specification -->
+      <h2>Bảng thông số bánh răng</h2>
+      <table>
+        <thead> 
+          <tr> 
+            <th>Các thông số</th>
+            <th>Bánh răng 1</th>
+            <th>Bánh răng 2</th>
+          </tr>
+        </thead>
+        <tbody> 
+          <tr> 
+            <td>Đường kính vòng chia</td>
+            <td>d <sub>1</sub> = ${gearSpecification.d1} (mm)</td>
+            <td>d <sub>2</sub> = ${gearSpecification.d2} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Đường kính vòng đỉnh</td>
+            <td>d <sub>a1</sub> = ${gearSpecification.da1} (mm)</td>
+            <td>d <sub>a2</sub> = ${gearSpecification.da2} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Đường kính vòng lăn</td>
+            <td>d <sub>w1</sub> = ${gearSpecification.dw1} (mm)</td>
+            <td>d <sub>w2</sub> = ${gearSpecification.dw2} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Đường kính vòng chân</td>
+            <td>d <sub>f1</sub> = ${gearSpecification.df1} (mm)</td>
+            <td>d <sub>f2</sub> = ${gearSpecification.df2} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Khoảng cách trục</td>
+            <td colspan="2">a<sub>&omega;</sub> = a = ${gearSpecification.awx} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Chiều rộng vành răng</td>
+            <td colspan="2">b<sub>&omega;</sub> = ${gearSpecification.bw} (mm)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!-- New Table 3: Size of Transmission -->
+      <h2>Xác định kích thước chính của bộ truyền</h2>
+      <table style="table-layout: fixed;">
+        <thead> 
+          <tr> 
+            <th>Thông số hình học</th>
+            <th>Công thức</th>
+          </tr>
+        </thead>
+        <tbody> 
+          <tr> 
+            <td colspan="2" style="text-align:center; font-weight:700;">Trục Vít</td>
+          </tr>
+          <tr>
+            <td> <span>Đường kính vòng chia</span></td>
+            <td>d<sub>1</sub> = ${sizeOfTransmission.truc_vit.d1} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Đường kính vòng đỉnh</td>
+            <td>d<sub>a1</sub> = ${sizeOfTransmission.truc_vit.da1} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Đường kính vòng đáy</td>
+            <td>d<sub>f1</sub> = ${sizeOfTransmission.truc_vit.df1} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Góc xoắn ốc vít</td>
+            <td>&gamma; = ${sizeOfTransmission.truc_vit.y}&deg;</td>
+          </tr>
+          <tr> 
+            <td>Chiều dài phần cắt ren trục vít</td>
+            <td>
+                b<sub>1</sub> = ${sizeOfTransmission.truc_vit.b1} (mm)</td>
+          </tr>
+          <tr> 
+            <td colspan="2" style="text-align:center; font-weight:700;">Bánh Vít</td>
+            <tr></tr>
+            <td> <span>Đường kính vòng chia</span></td>
+            <td>d<sub>2</sub> = ${sizeOfTransmission.banh_vit.d2} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Đường kính vòng đỉnh</td>
+            <td>d<sub>a2</sub> = ${sizeOfTransmission.banh_vit.da2} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Đường kính vòng đáy</td>
+            <td>d<sub>f2</sub> = ${sizeOfTransmission.banh_vit.df2} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Khoảng cách trục</td>
+            <td>a<sub>&omega;</sub> =  ${sizeOfTransmission.banh_vit.aw} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Đường kính lớn nhất của bánh vít</td>
+            <td>d<sub>aM2</sub> = ${sizeOfTransmission.banh_vit.daM2} (mm)</td>
+          </tr>
+          <tr> 
+            <td>Chiều rộng của bánh vít</td>
+            <td>b<sub>2</sub> = ${sizeOfTransmission.banh_vit.b2} (mm)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="footer">
+      <p>© 2025 Công ty XYZ - Mọi quyền được bảo lưu.</p>
+    </div>
+  </body>
+</html>
