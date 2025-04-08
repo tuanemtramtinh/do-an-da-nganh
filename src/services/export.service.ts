@@ -3,19 +3,18 @@ import mongoose, { Model } from 'mongoose'
 import path from 'path'
 import puppeteer from 'puppeteer'
 import Chapter1 from '~/models/chapter1.model'
+import Chapter2 from '../models/chapter2.model'
 
 export class ExportService {
-  private Chapter1
+  private Chapter1: Model<any>
+  private Chapter2: Model<any>
 
-  constructor(Chapter1: Model<any>) {
+  constructor(Chapter1: Model<any>, Chapter2: Model<any>) {
     this.Chapter1 = Chapter1
+    this.Chapter2 = Chapter2
   }
 
-  // public exportPdf = async (data: any) => {
-
-  // }
-
-  public exportChapter1 = async (inputId: mongoose.Schema.Types.ObjectId) => {
+  public exportChapter1 = async (inputId: mongoose.Types.ObjectId) => {
     const chapter1 = await this.Chapter1.findOne({
       inputId: inputId
     }).populate('engineId')
@@ -90,6 +89,80 @@ export class ExportService {
       const T_III = document.querySelector('.T_III') as HTMLElement
       if (T_III) T_III.innerText = Number(data.T_III).toFixed(3)
     }, chapter1)
+
+    const pdfBuffer = await page.pdf({
+      format: 'A4',
+      printBackground: true
+    })
+
+    return pdfBuffer
+  }
+
+  public exportChapter2 = async (inputId: mongoose.Types.ObjectId) => {
+    const chapter2 = await this.Chapter2.findOne({
+      inputId: inputId
+    })
+
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    })
+
+    const page = await browser.newPage()
+
+    const htmlPath = path.resolve(__dirname, '../template/report.chapter2.html') // Go up one directory and look for reportTemplate.html
+    const htmlContent = readFileSync(htmlPath, 'utf-8')
+
+    await page.setContent(htmlContent, { waitUntil: 'domcontentloaded' })
+
+    page.on('console', (msg) => {
+      console.log('Browser log:', msg.text())
+    })
+
+    await page.evaluate((data) => {
+      const beltParameter = document.querySelector('.belt-parameters') as HTMLTableElement
+      const sizeOfTransmission1 = document.querySelector('.size-of-transmission-1') as HTMLTableElement
+      const sizeOfTransmission = document.querySelector('.size-of-transmission') as HTMLTableElement
+      const gearSpecification = document.querySelector('.gear-specification') as HTMLTableElement
+
+      const beltParameterRow = beltParameter.rows
+      beltParameterRow[1].cells[1].innerText = data.beltParamaters.d1
+      beltParameterRow[2].cells[1].innerText = data.beltParamaters.d2
+      beltParameterRow[3].cells[1].innerText = data.beltParamaters.a
+      beltParameterRow[4].cells[1].innerText = data.beltParamaters.L
+      beltParameterRow[5].cells[1].innerText = data.beltParamaters.goc_om_dai
+      beltParameterRow[6].cells[1].innerText = data.beltParamaters.z
+      beltParameterRow[7].cells[1].innerText = data.beltParamaters.B
+      beltParameterRow[8].cells[1].innerText = data.beltParamaters.F0
+      beltParameterRow[9].cells[1].innerText = data.beltParamaters.Fr
+
+      const sizeOfTransmission1Row = sizeOfTransmission1.rows
+      sizeOfTransmission1Row[2].cells[1].innerText = data.sizeOfTranmission.truc_vit.d1
+      sizeOfTransmission1Row[3].cells[1].innerText = data.sizeOfTranmission.truc_vit.da1
+      sizeOfTransmission1Row[4].cells[1].innerText = data.sizeOfTranmission.truc_vit.df1
+      sizeOfTransmission1Row[5].cells[1].innerText = data.sizeOfTranmission.truc_vit.y
+      sizeOfTransmission1Row[6].cells[1].innerText = data.sizeOfTranmission.truc_vit.b1
+
+      const sizeOfTransmissionRow = sizeOfTransmission.rows
+      sizeOfTransmissionRow[2].cells[1].innerText = data.sizeOfTranmission.banh_vit.d2
+      sizeOfTransmissionRow[3].cells[1].innerText = data.sizeOfTranmission.banh_vit.da2
+      sizeOfTransmissionRow[4].cells[1].innerText = data.sizeOfTranmission.banh_vit.df2
+      sizeOfTransmissionRow[5].cells[1].innerText = data.sizeOfTranmission.banh_vit.aw
+      sizeOfTransmissionRow[6].cells[1].innerText = data.sizeOfTranmission.banh_vit.daM2
+      sizeOfTransmissionRow[7].cells[1].innerText = data.sizeOfTranmission.banh_vit.b2
+
+      const gearSpecificationRow = gearSpecification.rows
+      gearSpecificationRow[1].cells[1].innerText = data.gearSpecification.d1
+      gearSpecificationRow[1].cells[2].innerText = data.gearSpecification.d1
+      gearSpecificationRow[2].cells[1].innerText = data.gearSpecification.da1
+      gearSpecificationRow[2].cells[2].innerText = data.gearSpecification.da2
+      gearSpecificationRow[3].cells[1].innerText = data.gearSpecification.dw1
+      gearSpecificationRow[3].cells[2].innerText = data.gearSpecification.dw2
+      gearSpecificationRow[4].cells[1].innerText = data.gearSpecification.df1
+      gearSpecificationRow[4].cells[2].innerText = data.gearSpecification.df2
+      gearSpecificationRow[5].cells[1].innerText = data.gearSpecification.awx
+      gearSpecificationRow[6].cells[1].innerText = data.gearSpecification.bw
+    }, chapter2)
 
     const pdfBuffer = await page.pdf({
       format: 'A4',
