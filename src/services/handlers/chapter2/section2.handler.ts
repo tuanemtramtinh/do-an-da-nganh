@@ -2,7 +2,7 @@ import { IInputData } from '~/interfaces/input.interface'
 import { AbstractHandler } from '../abstract.handler'
 
 export class Chapter2Section2Handler extends AbstractHandler {
-  public handle = (input: IInputData, result: any): any | null => {
+  public handle(input: IInputData, result: any, request: string = ''): any | null {
     //2.2 Dự đoán vận tốc trượt
 
     //Công thức tính Vs --  7.1 Trang 147 [1]
@@ -539,9 +539,6 @@ export class Chapter2Section2Handler extends AbstractHandler {
 
     const lucVongTrucVit_Ft1 = Number(tinhFt1Fa2(result.chapter1.T_I, duongKinhVongChia_d1).toFixed(2))
     const lucDocTrucBanhVit_Fa2 = Number(tinhFt1Fa2(result.chapter1.T_I, duongKinhVongChia_d1).toFixed(2))
-    // console.log(
-    //   `Lực vòng trục vít bằng lực dọc trục bánh vít Ft1 = Fa2 = ${lucVongTrucVit_Ft1} = ${lucDocTrucBanhVit_Fa2} (N)`
-    // )
 
     //Tính Ft2 và Fa1
     const tinhFt2Fa1 = (T2: number, d2: number): number => {
@@ -634,7 +631,6 @@ export class Chapter2Section2Handler extends AbstractHandler {
     const momentQuanTinhTuongDuongMatCatTrucVit_Je = Number(
       tinhJe(duongKinhVongDinh_da1, duongKinhVongDay_df1).toFixed(2)
     )
-    // console.log(`Moment quán tính tương đương mặt cắt trục vít Je = ${momentQuanTinhTuongDuongMatCatTrucVit_Je} (mm^4)`)
 
     //Tính y
     const tinhDoCungY = (l: number, fr1: number, ft1: number, E: number, Je: number): number => {
@@ -645,7 +641,6 @@ export class Chapter2Section2Handler extends AbstractHandler {
     const doCungCuaTrucVit_y = Number(
       tinhDoCungY(l, lucHuongTamTrucVit_Fr1, lucVongTrucVit_Ft1, E, momentQuanTinhTuongDuongMatCatTrucVit_Je).toFixed(5)
     )
-    // console.log(`Độ cứng của trục vít y = ${doCungCuaTrucVit_y} (mm)`)
 
     const sizeOfTranmission = {
       truc_vit: {
@@ -662,12 +657,19 @@ export class Chapter2Section2Handler extends AbstractHandler {
         aw: khoangCachTrucCuaBanhVit_aw,
         daM2: duongKinhLonNhatCuaBanhVit_daM2,
         b2: chieuRongCuaBanhVit_b2
-      }
+      },
+      Fr1: lucHuongTamTrucVit_Fr1,
+      Ft2: lucVongTrucVit_Ft2,
+      Ft1: lucVongTrucVit_Ft1
     }
 
-    return super.handle(input, {
-      ...result,
-      sizeOfTranmission
-    })
+    return super.handle(
+      input,
+      {
+        ...result,
+        sizeOfTranmission
+      },
+      request
+    )
   }
 }

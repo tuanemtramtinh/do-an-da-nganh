@@ -2,7 +2,7 @@ import { IInputData } from '~/interfaces/input.interface'
 
 interface Handler {
   setNext(handler: Handler): Handler
-  handle(input: IInputData, result: object): object | null
+  handle(input: IInputData, result: object, request: string): object | null
 }
 
 export abstract class AbstractHandler implements Handler {
@@ -13,8 +13,8 @@ export abstract class AbstractHandler implements Handler {
     return handler
   }
 
-  public handle(input: IInputData, result: any): any | null {
+  public handle(input: IInputData, result: any, request: string = ''): any | null {
     if (!this.nextHandler) return result
-    return this.nextHandler.handle(input, result)
+    return this.nextHandler.handle(input, result, request)
   }
 }

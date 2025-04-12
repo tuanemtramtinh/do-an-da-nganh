@@ -10,7 +10,9 @@ const engineController = new EngineController(engineService)
 
 router.post('/', engineController.saveEngine)
 
-// router.get('/')
+router.get('/', engineController.getEngineList)
+
+router.get('/:engineCode', engineController.getEngineDetail)
 
 const engineRouter = router
 export default engineRouter

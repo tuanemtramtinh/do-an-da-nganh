@@ -8,7 +8,7 @@ interface BanhRang {
 }
 
 export class Chapter2Section3Handler extends AbstractHandler {
-  public handle = (input: IInputData, result: any): any | null => {
+  public handle(input: IInputData, result: any, request: string = ''): any | null {
     //Chọn vật liệu
     const section3_1 = () => {
       //Bánh răng nhỏ
@@ -474,9 +474,13 @@ export class Chapter2Section3Handler extends AbstractHandler {
       awx,
       bw
     }
-    return super.handle(input, {
-      ...result,
-      gearSpecification
-    })
+    return super.handle(
+      input,
+      {
+        ...result,
+        gearSpecification
+      },
+      request
+    )
   }
 }

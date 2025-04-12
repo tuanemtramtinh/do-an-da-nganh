@@ -90,7 +90,7 @@ export class Chapter2Section1Handler extends AbstractHandler {
     return (Math.PI * d1 * result.engineId.van_toc_quay_vgph) / 60000
   }
 
-  public handle = (input: IInputData, result: any): any | null => {
+  public handle(input: IInputData, result: any, request: string = ''): any | null {
     const result_dai = this.selectBeltType(result.chapter1.P_dc, result.chapter1.n_dc)
 
     let bp: number = 0
@@ -319,9 +319,13 @@ export class Chapter2Section1Handler extends AbstractHandler {
       Fr: Fr
     }
 
-    return super.handle(input, {
-      ...result,
-      beltParameters
-    })
+    return super.handle(
+      input,
+      {
+        ...result,
+        beltParameters
+      },
+      request
+    )
   }
 }

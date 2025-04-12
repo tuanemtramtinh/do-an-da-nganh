@@ -121,6 +121,9 @@ export class Chapter1Handler /*extends AbstractHandler*/ {
     const fifthNumber = -(tany ** 2 * u_h ** 3)
     const result = solveQuartic(firstNumber, secondNumber, thirdNumber, fourthNumber, fifthNumber)
     const finalResult = result.find((item) => item.re >= 0 && item.im === 0)
+    console.log({
+      utv: finalResult.re
+    })
     return finalResult.re //Trả về phần thực
   }
 
@@ -153,6 +156,24 @@ export class Chapter1Handler /*extends AbstractHandler*/ {
     const T_2 = 9.55 * 10 ** 6 * (P_2 / n_2)
     const T_3 = 9.55 * 10 ** 6 * (P_3 / n_3)
     const T_dc = 9.55 * 10 ** 6 * (P_dc / n_dc)
+
+    //  // 3.1. Tính toán tốc độ quay trên các trục
+    //  const n_dc = engine.van_toc_quay_vgph //Trục động cơ
+    //  const n_1 = parseFloat((n_dc / u_d).toFixed(2)) //Trục I
+    //  const n_2 = parseFloat((n_1 / u_tv).toFixed(2)) //Trục II
+    //  const n_3 = parseFloat((n_2 / u_brt).toFixed(2)) //Trục III
+
+    //  // 3.2. Tính công suất trên các trục
+    //  const P_3 = parseFloat((P_td / (n_kn * n_ol)).toFixed(2)) //Công suất danh nghĩa trên trục III
+    //  const P_2 = parseFloat((P_3 / (n_brt * n_ol)).toFixed(2)) //Công suất danh nghĩa trên trục II
+    //  const P_1 = parseFloat((P_2 / (n_tv * n_ol)).toFixed(2)) //Công suất danh nghĩa trên trục I
+    //  const P_dc = parseFloat((P_1 / (n_d * n_ol)).toFixed(2)) //Công suất danh nghĩa trên trục động cơ
+
+    //  // 3.3.Tính momen xoắn trên các trục
+    //  const T_1 = parseFloat((9.55 * 10 ** 6 * (P_1 / n_1)).toFixed(2))
+    //  const T_2 = parseFloat((9.55 * 10 ** 6 * (P_2 / n_2)).toFixed(2))
+    //  const T_3 = parseFloat((9.55 * 10 ** 6 * (P_3 / n_3)).toFixed(2))
+    //  const T_dc = parseFloat((9.55 * 10 ** 6 * (P_dc / n_dc)).toFixed(2))
 
     return {
       P_dc,

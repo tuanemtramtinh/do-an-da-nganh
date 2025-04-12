@@ -44,7 +44,10 @@ const chapter2Schema = new Schema<any>(
         aw: Number,
         daM2: Number,
         b2: Number
-      }
+      },
+      Fr1: Number,
+      Ft1: Number,
+      Ft2: Number
     }
   },
   {

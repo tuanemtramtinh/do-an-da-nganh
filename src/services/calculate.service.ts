@@ -3,18 +3,31 @@ import { IInputData } from '~/interfaces/input.interface'
 import { Chapter1Handler } from './handlers/chapter1.handler'
 import Engine from '~/models/engine.model'
 import { Chapter2Handler } from './handlers/chapter2/chapter2.handler'
+import { Chapter3Handler } from './handlers/chapter3/chapter3.handler'
 
 export class CalculateService {
   private Input //Model
   private Chapter1 //Model
   private Chapter2 //Model
+  private Chapter3 //Model
   private chapter1Handler: Chapter1Handler
+  // private chapter2Handler: Chapter2Handler
+  // private chapter3Handler: Chapter3Handler
 
-  constructor(Input: Model<IInputData>, Chapter1: Model<any>, Chapter2: Model<any>, chapter1Handler: Chapter1Handler) {
+  constructor(
+    Input: Model<IInputData>,
+    Chapter1: Model<any>,
+    Chapter2: Model<any>,
+    Chapter3: Model<any>,
+    chapter1Handler: Chapter1Handler
+  ) {
     this.Input = Input
     this.Chapter1 = Chapter1
     this.Chapter2 = Chapter2
+    this.Chapter3 = Chapter3
     this.chapter1Handler = chapter1Handler
+    // this.chapter2Handler = chapter2Handler
+    // this.chapter3Handler = chapter3Handler
   }
 
   public saveInput = async (data: IInputData) => {
@@ -24,6 +37,16 @@ export class CalculateService {
     chapter1.status = 'initial'
     await chapter1.save()
     return newInput
+  }
+
+  public getInput = async (inputId: mongoose.Types.ObjectId) => {
+    const input = await this.Input.findById(inputId)
+
+    if (!input) {
+      throw Error('Input Id không hợp lệ')
+    }
+
+    return input
   }
 
   //Chapter 1 - Stage 1
@@ -142,4 +165,88 @@ export class CalculateService {
 
     return chapter2
   }
+
+  public handleChapter3 = async (
+    inputId: mongoose.Types.ObjectId,
+    lm12: number,
+    lm22: number,
+    lm23: number,
+    lm34: number,
+    lm33: number
+  ) => {
+    const input = await this.Input.findById(inputId)
+
+    if (!input) {
+      throw Error('InputId không hợp lệ')
+    }
+
+    const chapter1Result = await this.Chapter1.findOne({
+      inputId
+    }).populate('engineId')
+
+    const chapter2Result = await this.Chapter2.findOne({
+      inputId
+    })
+
+    let chapter3Result = await this.Chapter3.findOne({
+      inputId
+    })
+
+    if (chapter3Result) chapter3Result = chapter3Result.toObject()
+
+    let request: string = ''
+
+    if (!chapter3Result) {
+      request = 'initial'
+      const chapter3 = new this.Chapter3()
+      chapter3.inputId = inputId
+      chapter3.status = 'initial'
+      await chapter3.save()
+    } else if (
+      lm12 !== -1 &&
+      lm22 !== -1 &&
+      lm23 !== -1 &&
+      lm34 !== -1 &&
+      lm33 !== -1 &&
+      chapter3Result.status === 'processing'
+    ) {
+      request = chapter3Result.status
+      chapter3Result.lm12 = lm12
+      chapter3Result.lm22 = lm22
+      chapter3Result.lm23 = lm23
+      chapter3Result.lm34 = lm34
+      chapter3Result.lm33 = lm33
+
+      console.log(chapter3Result)
+    }
+
+    const chapter3Handler = new Chapter3Handler(input, chapter1Result, chapter2Result, chapter3Result, request)
+    const result = chapter3Handler.run()
+    const chapter3 = result.chapter3
+    if (request === 'initial') {
+      await this.Chapter3.updateOne(
+        {
+          inputId: inputId
+        },
+        {
+          ...chapter3,
+          status: 'processing'
+        }
+      )
+    } else {
+      await this.Chapter3.updateOne(
+        {
+          inputId: inputId
+        },
+        {
+          ...chapter3,
+          status: 'finish'
+        }
+      )
+    }
+
+    return result
+  }
+
+  public getChapter3 = async (inputId: mongoose.Types.ObjectId) => {}
 }
