@@ -40,7 +40,7 @@ export class CalculateController extends Controller {
     }
   }
 
-  public testAI = async (req: Request, res: Response) => {
+  public uploadInputImage = async (req: Request, res: Response) => {
     if (!req.file) {
       this.failedMessage(res, 'Bạn phải upload file image với field "image".')
       return
@@ -51,66 +51,41 @@ export class CalculateController extends Controller {
       })
       const imgBase64 = req.file?.buffer.toString('base64')
       const resp = await openai.chat.completions.create({
-        model: 'gpt-4o-mini', // hoặc 'gpt-4o-mini'
+        model: 'gpt-4o-mini', // hoặc 'gpt-4o-mini',
+        temperature: 0,
         messages: [
           {
             role: 'system',
-            content: 'You are an AI assistant capable of reading text from images and extracting parameters.'
+            content: [
+              'You are a JSON extractor. Respond ONLY with a single valid JSON object—no explanations, no extra text, and do NOT wrap it in markdown or code fences.',
+              'All fields must be numbers (no units).',
+              "For fields T1 and T2, interpret the letter 'T' as 1 torque unit:",
+              "- If the original value is exactly 'T', output 1.",
+              "- If it's of the form '<number>T' (e.g. '0.8T'), output that <number> (decimal point)."
+            ].join(' ')
           },
           {
             role: 'user',
-            content: `Giải pháp cho prompt trích xuất dữ liệu từ hình ảnh
-
-Tôi hiểu mối quan ngại của bạn về việc hình ảnh đầu vào có thể thay đổi và nguy cơ API sẽ sao chép kết quả từ ví dụ cụ thể thay vì thực sự trích xuất dữ liệu. Đây là một vấn đề thực tế khi làm việc với các mô hình AI.
-
-Dưới đây là prompt được tối ưu hóa để giải quyết vấn đề này:
-
-Phân tích hình ảnh chứa thông số kỹ thuật và trích xuất các giá trị số. Tìm và trích xuất những thông tin sau:
-
-1. F: Lực vòng trên xích tải (đơn vị N)
-2. v: Vận tốc xích tải (đơn vị m/s)
-3. p: Bước xích tải (đơn vị mm)
-4. L: Thời gian phục vụ (đơn vị năm)
-5. z: Số răng đĩa xích tải dẫn
-6. T1: Hệ số tải T₁ (nếu thấy "T₁ = T" thì giá trị là 1.0)
-7. t1: Thời gian t₁ (đơn vị giây)
-8. T2: Hệ số tải T₂ (nếu thấy "T₂ = 0.8T" thì giá trị là 0.8)
-9. t2: Thời gian t₂ (đơn vị giây)
-
-Trả về KẾT QUẢ DUY NHẤT là một đối tượng JSON hợp lệ với các quy tắc sau:
-- Loại bỏ tất cả đơn vị từ các giá trị
-- Sử dụng kiểu số (không phải chuỗi) cho tất cả giá trị
-- Không bao gồm bất kỳ giải thích, khối mã hoặc văn bản bổ sung nào
-- Đối tượng JSON phải bắt đầu bằng { và kết thúc bằng }
-
-QUAN TRỌNG: KHÔNG sử dụng bất kỳ giá trị cụ thể nào trong ví dụ hoặc mẫu. Chỉ trích xuất thông tin từ hình ảnh được cung cấp.
-Chuỗi đã định dạng để sử dụng trong mã của bạn:
-
-Copyprompt = """Phân tích hình ảnh chứa thông số kỹ thuật và trích xuất các giá trị số. Tìm và trích xuất những thông tin sau:
-
-1. F: Lực vòng trên xích tải (đơn vị N)
-2. v: Vận tốc xích tải (đơn vị m/s)
-3. p: Bước xích tải (đơn vị mm)
-4. L: Thời gian phục vụ (đơn vị năm)
-5. z: Số răng đĩa xích tải dẫn
-6. T1: Hệ số tải T₁ (nếu thấy "T₁ = T" thì giá trị là 1.0)
-7. t1: Thời gian t₁ (đơn vị giây)
-8. T2: Hệ số tải T₂ (nếu thấy "T₂ = 0.8T" thì giá trị là 0.8)
-9. t2: Thời gian t₂ (đơn vị giây)
-
-Trả về KẾT QUẢ DUY NHẤT là một đối tượng JSON hợp lệ với các quy tắc sau:
-- Loại bỏ tất cả đơn vị từ các giá trị
-- Sử dụng kiểu số (không phải chuỗi) cho tất cả giá trị
-- Không bao gồm bất kỳ giải thích, khối mã hoặc văn bản bổ sung nào
-- Đối tượng JSON phải bắt đầu bằng { và kết thúc bằng }
-
-QUAN TRỌNG: KHÔNG sử dụng bất kỳ giá trị cụ thể nào trong ví dụ hoặc mẫu. Chỉ trích xuất thông tin từ hình ảnh được cung cấp.`
-          },
-          {
-            role: 'user',
-            content: `![image](data:image/png;base64,${imgBase64})`
+            content: [
+              {
+                type: 'text',
+                text: `Extract all text from this image and preserve formatting (bullet points, formulas, units).
+      Then extract the following fields and return them as a single JSON object with only numeric values (strip all units and text):
+      - F
+      - v
+      - z
+      - p
+      - L
+      - t1
+      - t2
+      - T1
+      - T2`.trim()
+              },
+              { type: 'image_url', image_url: { url: `data:image/png;base64,${imgBase64}` } }
+            ]
           }
-        ]
+        ],
+        max_tokens: 500
       })
 
       const text = resp.choices[0].message.content
@@ -131,7 +106,7 @@ QUAN TRỌNG: KHÔNG sử dụng bất kỳ giá trị cụ thể nào trong ví
 
       console.log(data)
 
-      res.json('hello')
+      this.successMessage(res, 'Lấy dữ liệu thành công từ AI', data)
     } catch (error: any) {
       this.failedMessage(res, error.message)
     }

@@ -22,7 +22,7 @@ router.post('/input', authMiddleware, inputRequestValidate, calculateController.
 
 router.get('/input', calculateController.getInput)
 
-router.get('/ai', upload.single('image'), calculateController.testAI)
+router.post('/ai', upload.single('image'), calculateController.uploadInputImage)
 
 router.post('/chapter-1/stage-1', calculateController.chooseEngine)
 
