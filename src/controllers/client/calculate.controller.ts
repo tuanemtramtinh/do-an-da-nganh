@@ -112,26 +112,50 @@ export class CalculateController extends Controller {
     }
   }
 
-  public chooseEngine = async (req: Request, res: Response) => {
-    const inputId = req.body.inputId
-    const result = await this.calculateService.chooseEngine(inputId)
-    this.successMessage(res, 'Lưu input và trả ra danh sách động cơ thành công', result)
-  }
+  // public chooseEngine = async (req: Request, res: Response) => {
+  //   const inputId = req.body.inputId
+  //   const result = await this.calculateService.chooseEngine(inputId)
+  //   this.successMessage(res, 'Lưu input và trả ra danh sách động cơ thành công', result)
+  // }
 
-  public engineCharacteristic = async (req: Request, res: Response) => {
-    try {
-      const inputId = req.body.inputId
-      const engineId = req.body.engineId
-      const result = await this.calculateService.engineCharacteristics(inputId, engineId)
-      this.successMessage(res, 'Tính toán thành công', result)
-    } catch (error: any) {
-      this.failedMessage(res, error.message)
-    }
-  }
+  // public engineCharacteristic = async (req: Request, res: Response) => {
+  //   try {
+  //     const inputId = req.body.inputId
+  //     const engineId = req.body.engineId
+  //     const result = await this.calculateService.engineCharacteristics(inputId, engineId)
+  //     this.successMessage(res, 'Tính toán thành công', result)
+  //   } catch (error: any) {
+  //     this.failedMessage(res, error.message)
+  //   }
+  // }
 
-  public getChapter1 = async (req: Request, res: Response) => {
+  // public getChapter1 = async (req: Request, res: Response) => {
+  //   try {
+  //     const inputId = req.query.inputId
+
+  //     if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
+  //       this.failedMessage(res, 'Invalid inputId')
+  //       return
+  //     }
+
+  //     const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
+
+  //     const result = await this.calculateService.getChapter1(inputObjectId)
+  //     this.successMessage(res, 'Lấy chương 1 thành công', result)
+  //   } catch (error: any) {
+  //     this.failedMessage(res, error.message)
+  //   }
+  // }
+
+  public handleChapter1 = async (req: Request, res: Response) => {
     try {
       const inputId = req.query.inputId
+      const n_ol = req.query.n_ol ? parseFloat(req.query.n_ol as string) : -1
+      const n_tv = req.query.n_tv ? parseFloat(req.query.n_tv as string) : -1
+      const n_brt = req.query.n_brt ? parseFloat(req.query.n_brt as string) : -1
+      const n_d = req.query.n_d ? parseFloat(req.query.n_d as string) : -1
+      const n_kn = req.query.n_kn ? parseFloat(req.query.n_kn as string) : -1
+      const engine = req.query.engineId ? new mongoose.Types.ObjectId(req.query.engineId as string) : null
 
       if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
         this.failedMessage(res, 'Invalid inputId')
@@ -139,9 +163,9 @@ export class CalculateController extends Controller {
       }
 
       const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
-
-      const result = await this.calculateService.getChapter1(inputObjectId)
-      this.successMessage(res, 'Lấy chương 1 thành công', result)
+      const result = await this.calculateService.handleChapter1(inputObjectId, n_ol, n_tv, n_brt, n_d, n_kn, engine)
+      // console.log(result)
+      this.successMessage(res, 'Tính toán chương 1 thành công', result)
     } catch (error: any) {
       this.failedMessage(res, error.message)
     }
@@ -175,6 +199,7 @@ export class CalculateController extends Controller {
       const lm23 = req.query.lm23 ? parseInt(req.query.lm23 as string) : -1
       const lm34 = req.query.lm34 ? parseInt(req.query.lm34 as string) : -1
       const lm33 = req.query.lm33 ? parseInt(req.query.lm33 as string) : -1
+      const F_nt = req.query.F_nt ? parseInt(req.query.F_nt as string) : -1
 
       if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
         this.failedMessage(res, 'Invalid inputId')
@@ -182,8 +207,8 @@ export class CalculateController extends Controller {
       }
 
       const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
-      const result = await this.calculateService.handleChapter3(inputObjectId, lm12, lm22, lm23, lm34, lm33)
-      res.json(result)
+      const result = await this.calculateService.handleChapter3(inputObjectId, lm12, lm22, lm23, lm34, lm33, F_nt)
+      this.successMessage(res, 'Tính toán chương 3 thành công', result)
     } catch (error: any) {
       this.failedMessage(res, error.message)
     }

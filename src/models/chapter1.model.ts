@@ -27,7 +27,12 @@ const chapter1Schema = new Schema<any>(
     T_I: Number,
     T_II: Number,
     T_III: Number,
-    status: String
+    status: String,
+    n_ol: Number,
+    n_tv: Number,
+    n_brt: Number,
+    n_d: Number,
+    n_kn: Number
   },
   {
     timestamps: true,

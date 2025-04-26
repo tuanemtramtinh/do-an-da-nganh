@@ -22,4 +22,9 @@ export interface IChapter1Result {
   n_I: number
   n_II: number
   n_III: number
+  n_ol: number
+  n_tv: number
+  n_brt: number
+  n_d: number
+  n_kn: number
 }

@@ -208,6 +208,8 @@ export class Chapter2Section1Handler extends AbstractHandler {
     let k = Lsb - (Math.PI * (d1 + d2)) / 2
     let denta = (d2 - d1) / 2
 
+    console.log(Lsb)
+
     let a = (k + Math.sqrt(k * k - 8 * denta * denta)) / 4
 
     while (a < 0.7 * (d1 + d2) && a > 2 * (d1 + d2)) {

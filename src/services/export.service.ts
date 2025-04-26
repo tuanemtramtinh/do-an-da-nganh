@@ -6,10 +6,12 @@ import puppeteer from 'puppeteer'
 export class ExportService {
   private Chapter1: Model<any>
   private Chapter2: Model<any>
+  private Chapter3: Model<any>
 
-  constructor(Chapter1: Model<any>, Chapter2: Model<any>) {
+  constructor(Chapter1: Model<any>, Chapter2: Model<any>, Chapter3: Model<any>) {
     this.Chapter1 = Chapter1
     this.Chapter2 = Chapter2
+    this.Chapter3 = Chapter3
   }
 
   public exportChapter1 = async (inputId: mongoose.Types.ObjectId) => {
@@ -191,6 +193,121 @@ export class ExportService {
 
       return pdfBuffer
     } finally {
+      await browser.close()
+    }
+  }
+
+  public exportChapter3 = async (inputId: mongoose.Types.ObjectId) => {
+    const chapter3 = await this.Chapter3.findOne({ inputId })
+    if (!chapter3) {
+      throw new Error('Chapter3 not found')
+    }
+
+    // Launch Puppeteer browser
+    const browser = await puppeteer.launch({
+      headless: true,
+      args: ['--no-sandbox', '--disable-setuid-sandbox']
+    })
+
+    try {
+      const page = await browser.newPage()
+
+      // Load the HTML template
+      const htmlPath = path.resolve(__dirname, '../template/report.chapter3.html')
+      const htmlContent = readFileSync(htmlPath, 'utf-8')
+      await page.setContent(htmlContent, { waitUntil: 'domcontentloaded' })
+
+      // Populate the template's DOM elements using the fetched data
+      await page.evaluate((data) => {
+        const firstTable = document.querySelector('.first table') as HTMLTableElement
+        const secondTable = document.querySelector('.second table') as HTMLTableElement
+        const thirdTable = document.querySelector('.third table') as HTMLTableElement
+
+        if (firstTable) {
+          const rows = firstTable.rows
+          rows[1].cells[0].innerText = 'B'
+          rows[1].cells[1].innerText = data.dsb1
+          rows[1].cells[2].innerText = `${data.bB} x ${data.hB}`
+          rows[1].cells[3].innerText = data.t1B
+          rows[1].cells[4].innerText = data.WB.toFixed(2)
+          rows[1].cells[5].innerText = data.WB0.toFixed(2)
+
+          rows[2].cells[0].innerText = 'F'
+          rows[2].cells[1].innerText = data.dsb2
+          rows[2].cells[2].innerText = `${data.bF} x ${data.hF}`
+          rows[2].cells[3].innerText = data.t1F
+          rows[2].cells[4].innerText = data.WF.toFixed(2)
+          rows[2].cells[5].innerText = data.WF0.toFixed(2)
+
+          rows[3].cells[0].innerText = 'N'
+          rows[3].cells[1].innerText = data.dsb3
+          rows[3].cells[2].innerText = `${data.bN} x ${data.hN}`
+          rows[3].cells[3].innerText = data.t1N
+          rows[3].cells[4].innerText = data.WN.toFixed(2)
+          rows[3].cells[5].innerText = data.WN0.toFixed(2)
+        }
+
+        if (secondTable) {
+          const rows = secondTable.rows
+          rows[1].cells[0].innerText = 'B'
+          rows[1].cells[1].innerText = data.usaB.toFixed(2)
+          rows[1].cells[2].innerText = '0'
+          rows[1].cells[3].innerText = data.taB.toFixed(2)
+
+          rows[2].cells[0].innerText = 'F'
+          rows[2].cells[1].innerText = data.usaF.toFixed(2)
+          rows[2].cells[2].innerText = '0'
+          rows[2].cells[3].innerText = data.taF.toFixed(2)
+
+          rows[3].cells[0].innerText = 'N'
+          rows[3].cells[1].innerText = data.usaN.toFixed(2)
+          rows[3].cells[2].innerText = '0'
+          rows[3].cells[3].innerText = data.taN.toFixed(2)
+        }
+
+        if (thirdTable) {
+          const rows = thirdTable.rows
+          rows[1].cells[0].innerText = 'B'
+          rows[1].cells[1].innerText = data.dsb1
+          rows[1].cells[2].innerText = data.eoB
+          rows[1].cells[3].innerText = data.etB
+          rows[1].cells[4].innerText = data.KoBEoB.toFixed(2)
+          rows[1].cells[5].innerText = data.KtBEtB.toFixed(2)
+          rows[1].cells[6].innerText = data.soB.toFixed(2)
+          rows[1].cells[7].innerText = data.stB.toFixed(2)
+          rows[1].cells[8].innerText = data.sB.toFixed(2)
+
+          rows[2].cells[0].innerText = 'F'
+          rows[2].cells[1].innerText = data.dsb2
+          rows[2].cells[2].innerText = data.eoF
+          rows[2].cells[3].innerText = data.etF
+          rows[2].cells[4].innerText = data.KoBEoF.toFixed(2)
+          rows[2].cells[5].innerText = data.KtBEtF.toFixed(2)
+          rows[2].cells[6].innerText = data.soF.toFixed(2)
+          rows[2].cells[7].innerText = data.stF.toFixed(2)
+          rows[2].cells[8].innerText = data.sF.toFixed(2)
+
+          rows[3].cells[0].innerText = 'N'
+          rows[3].cells[1].innerText = data.dsb3
+          rows[3].cells[2].innerText = data.eoN
+          rows[3].cells[3].innerText = data.etN
+          rows[3].cells[4].innerText = data.KoBEoN.toFixed(2)
+          rows[3].cells[5].innerText = data.KtBEtN.toFixed(2)
+          rows[3].cells[6].innerText = data.soN.toFixed(2)
+          rows[3].cells[7].innerText = data.stN.toFixed(2)
+          rows[3].cells[8].innerText = data.sN.toFixed(2)
+        }
+      }, chapter3)
+
+      // Generate PDF from page content
+      const pdfBuffer = await page.pdf({
+        format: 'A4',
+        printBackground: true
+      })
+
+      return pdfBuffer
+    } finally {
+      // Always close the browser to prevent orphan processes
       await browser.close()
     }
   }

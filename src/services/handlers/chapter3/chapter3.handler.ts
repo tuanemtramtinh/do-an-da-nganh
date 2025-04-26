@@ -5,6 +5,10 @@ import { IChapter2Result } from '~/interfaces/chapter2_result.interface'
 import { Chapter3Section2Handler } from './section2.handler'
 import { Chapter3Section3Handler } from './section3.handler'
 import { Chapter3Section4Handler } from './section4.handler'
+import { Chapter3Section5Handler } from './section5.handler'
+import { Chapter3Section6Handler } from './section6.handler';
+import { Chapter3Section7Handler } from './section7.handler'
+import { Chapter3Section8Handler } from './section8.handler'
 
 export class Chapter3Handler {
   private inputData: IInputData
@@ -15,6 +19,10 @@ export class Chapter3Handler {
   private chapter3Section2Handler: Chapter3Section2Handler
   private chapter3Section3Handler: Chapter3Section3Handler
   private chapter3Section4Handler: Chapter3Section4Handler
+  private chapter3Section5Handler: Chapter3Section5Handler
+  private chapter3Section6Handler: Chapter3Section6Handler
+  private chapter3Section7Handler: Chapter3Section7Handler
+  private chapter3Section8Handler: Chapter3Section8Handler
   private request: string
 
   constructor(
@@ -32,6 +40,10 @@ export class Chapter3Handler {
     this.chapter3Section2Handler = new Chapter3Section2Handler()
     this.chapter3Section3Handler = new Chapter3Section3Handler()
     this.chapter3Section4Handler = new Chapter3Section4Handler()
+    this.chapter3Section5Handler = new Chapter3Section5Handler()
+    this.chapter3Section6Handler = new Chapter3Section6Handler()
+    this.chapter3Section7Handler = new Chapter3Section7Handler()
+    this.chapter3Section8Handler = new Chapter3Section8Handler()
 
     this.request = request
 
@@ -39,6 +51,10 @@ export class Chapter3Handler {
       .setNext(this.chapter3Section2Handler)
       .setNext(this.chapter3Section3Handler)
       .setNext(this.chapter3Section4Handler)
+      .setNext(this.chapter3Section5Handler)
+      .setNext(this.chapter3Section6Handler)
+      .setNext(this.chapter3Section7Handler)
+      .setNext(this.chapter3Section8Handler)
   }
 
   public run() {

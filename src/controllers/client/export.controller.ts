@@ -27,4 +27,13 @@ export class ExportController extends Controller {
     res.setHeader('Content-Length', pdfBuffer.length)
     res.end(pdfBuffer)
   }
+
+  public exportChapter3 = async (req: Request, res: Response) => {
+    const inputId: any = req.params.inputId
+    const pdfBuffer = await this.exportService.exportChapter3(inputId)
+    res.contentType('application/pdf')
+    res.setHeader('Content-Disposition', 'inline; filename="chapter1.pdf"')
+    res.setHeader('Content-Length', pdfBuffer.length)
+    res.end(pdfBuffer)
+  }
 }

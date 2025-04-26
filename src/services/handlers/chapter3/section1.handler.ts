@@ -15,6 +15,7 @@ export class Chapter3Section1Handler extends AbstractHandler {
         {
           ...result,
           chapter3: {
+            ...result.chapter3,
             vatLieuTruc,
             ungSuatXoanChoPhep_t,
             o1,

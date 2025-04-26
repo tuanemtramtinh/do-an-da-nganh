@@ -1,7 +1,11 @@
 import { solveQuartic } from '@littlefattie/solve-equations'
+import { IChapter1Result } from '~/interfaces/chapter1_result.interface'
 import { IInputData } from '~/interfaces/input.interface'
 // import { AbstractHandler } from './abstract.handler'
 import Engine from '~/models/engine.model'
+import { Chapter1Section1Handler } from './section1.handler'
+import { Chapter1Section2Handler } from './section2.handler'
+import { Chapter1Section3Handler } from './section3.handler'
 
 const NUM_OF_TAI_TRONG: number = 2
 const n_ol: number = 0.99 //Hiệu suất của một cặp ổ lăn
@@ -53,7 +57,6 @@ export class Chapter1Handler /*extends AbstractHandler*/ {
     return P_td / Eta
   }
   //1.3.2. Xác định số vòng quay sơ bộ của động cơ
-
   public calculateNlv = (input: IInputData): number => {
     return (60000 * input.v) / (input.z * input.p) //Số vòng quay của trục máy công tác
   }
@@ -194,18 +197,24 @@ export class Chapter1Handler /*extends AbstractHandler*/ {
     }
   }
 
-  // public handle = async (input: IInputData, result: object): Promise<object | null> => {
-  //   const Eta = this.calculateEta()
-  //   const P_td = this.calculatePtd(input)
-  //   const P_ct = this.calculatePct(P_td, Eta)
-  //   const n_sb = this.calculateNsb(input)
-  //   const engine = await this.chooseEngine(P_ct, n_sb)
-  //   return {
-  //     Eta,
-  //     P_td,
-  //     P_ct,
-  //     n_sb,
-  //     engine
-  //   }
-  // }
+  private inputData: IInputData
+  private chapter1Result: IChapter1Result
+  private chapter1Section1Handler: Chapter1Section1Handler
+  private chapter1Section2Handler: Chapter1Section2Handler
+  private chapter1Section3Handler: Chapter1Section3Handler
+  private request: string
+
+  constructor(inputData: IInputData, chapter1Result: IChapter1Result, request: string) {
+    this.inputData = inputData
+    this.request = request
+    this.chapter1Result = chapter1Result
+    this.chapter1Section1Handler = new Chapter1Section1Handler()
+    this.chapter1Section2Handler = new Chapter1Section2Handler()
+    this.chapter1Section3Handler = new Chapter1Section3Handler()
+    this.chapter1Section1Handler.setNext(this.chapter1Section2Handler).setNext(this.chapter1Section3Handler)
+  }
+
+  public run = async () => {
+    return await this.chapter1Section1Handler.handle(this.inputData, { chapter1: this.chapter1Result }, this.request)
+  }
 }
