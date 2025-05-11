@@ -1,22 +1,41 @@
 import mongoose, { Model } from 'mongoose'
 import { IInputData } from '~/interfaces/input.interface'
 import { Chapter1Handler } from './handlers/chapter1/chapter1.handler'
-import Engine from '~/models/engine.model'
 import { Chapter2Handler } from './handlers/chapter2/chapter2.handler'
 import { Chapter3Handler } from './handlers/chapter3/chapter3.handler'
-import { n_ol } from '~/constants/index.constant'
+import { Chapter4Handler } from './handlers/chapter4/chapter4.handler'
+import { Chapter5Handler } from './handlers/chapter5/chapter5.handler'
+import { Chapter6Handler } from './handlers/chapter6/chapter6.handler'
+import { Chapter7Handler } from './handlers/chapter7/chapter7.handler'
 
 export class CalculateService {
   private Input //Model
   private Chapter1 //Model
   private Chapter2 //Model
   private Chapter3 //Model
+  private Chapter4 //Model
+  private Chapter5 //Model
+  private Chapter6 //Model
+  private Chapter7 //Model
 
-  constructor(Input: Model<IInputData>, Chapter1: Model<any>, Chapter2: Model<any>, Chapter3: Model<any>) {
+  constructor(
+    Input: Model<IInputData>,
+    Chapter1: Model<any>,
+    Chapter2: Model<any>,
+    Chapter3: Model<any>,
+    Chapter4: Model<any>,
+    Chapter5: Model<any>,
+    Chapter6: Model<any>,
+    Chapter7: Model<any>
+  ) {
     this.Input = Input
     this.Chapter1 = Chapter1
     this.Chapter2 = Chapter2
     this.Chapter3 = Chapter3
+    this.Chapter4 = Chapter4
+    this.Chapter5 = Chapter5
+    this.Chapter6 = Chapter6
+    this.Chapter7 = Chapter7
   }
 
   public saveInput = async (data: IInputData) => {
@@ -236,10 +255,12 @@ export class CalculateService {
     chapter2.beltParamaters = result.beltParameters
     chapter2.gearSpecification = result.gearSpecification
     chapter2.sizeOfTranmission = result.sizeOfTranmission
+    chapter2.aw_test = result.aw_test
 
     await chapter2.save()
 
     return {
+      aw_test: result.aw_test,
       beltParamaters: result.beltParameters,
       gearSpecification: result.gearSpecification,
       sizeOfTranmission: result.sizeOfTranmission
@@ -364,5 +385,151 @@ export class CalculateService {
     return result.chapter3
   }
 
-  public getChapter3 = async (inputId: mongoose.Types.ObjectId) => {}
+  public handleChapter4 = async (inputId: mongoose.Types.ObjectId) => {
+    const input = await this.Input.findById(inputId)
+
+    if (!input) {
+      throw Error('InputId không hợp lệ')
+    }
+
+    const chapter1Result = await this.Chapter1.findOne({
+      inputId
+    }).populate('engineId')
+
+    const chapter2Result = await this.Chapter2.findOne({
+      inputId
+    })
+
+    const chapter3Result = await this.Chapter3.findOne({
+      inputId
+    })
+
+    let chapter4Result = await this.Chapter4.findOne({
+      inputId
+    })
+    
+    if (!chapter4Result) {
+      chapter4Result = new this.Chapter4()
+      chapter4Result.inputId = inputId
+      chapter4Result.status = 'initial'
+      await chapter4Result.save()
+    }
+
+    chapter4Result = chapter4Result.toObject()
+
+    const chapter4Handler = new Chapter4Handler(input, chapter1Result, chapter2Result, chapter3Result, chapter4Result)
+    const result = chapter4Handler.run()
+
+    await this.Chapter4.updateOne(
+      {
+        inputId: inputId
+      },
+      {
+        ...result.chapter4
+      }
+    )
+
+    // console.log(result.chapter4)
+
+    return result.chapter4
+  }
+
+  public handleChapter5 = async (inputId: mongoose.Types.ObjectId) => {
+    const input = await this.Input.findById(inputId)
+
+    if (!input) {
+      throw Error('InputId không hợp lệ')
+    }
+
+    const chapter1Result = await this.Chapter1.findOne({
+      inputId
+    }).populate('engineId')
+
+    const chapter2Result = await this.Chapter2.findOne({
+      inputId
+    })
+
+    const chapter3Result = await this.Chapter3.findOne({
+      inputId
+    })
+
+    const chapter4Result = await this.Chapter4.findOne({
+      inputId
+    })
+
+    let chapter5Result = await this.Chapter5.findOne({
+      inputId
+    })
+
+    if (!chapter5Result) {
+      chapter5Result = new this.Chapter5()
+      chapter5Result.inputId = inputId
+      chapter5Result.status = 'initial'
+      await chapter5Result.save()
+    }
+
+    chapter5Result = chapter5Result.toObject()
+
+    const chapter5Handler = new Chapter5Handler(input, chapter1Result, chapter2Result, chapter3Result, chapter4Result)
+    const result = chapter5Handler.run()
+
+    await this.Chapter5.updateOne(
+      {
+        inputId: inputId
+      },
+      {
+        ...result.chapter5
+      }
+    )
+
+    return result.chapter5
+  }
+
+  public handleChapter6 = async (inputId: mongoose.Types.ObjectId) => {
+    const input = await this.Input.findById(inputId)
+
+    if (!input) {
+      throw Error('InputId không hợp lệ')
+    }
+
+    let chapter6 = await this.Chapter6.findOne({
+      inputId
+    })
+
+    if (!chapter6) {
+      const chapter6Handler = new Chapter6Handler()
+      const result = chapter6Handler.run()
+
+      chapter6 = await this.Chapter6.create({
+        inputId,
+        lubricationTable: result
+      })
+    }
+
+    return chapter6
+  }
+
+  public handleChapter7 = async (inputId: mongoose.Types.ObjectId) => {
+    const input = await this.Input.findById(inputId)
+
+    if (!input) {
+      throw Error('InputId không hợp lệ')
+    }
+
+    let chapter7 = await this.Chapter7.findOne({
+      inputId
+    })
+
+    if (!chapter7) {
+      const chapter7Handler = new Chapter7Handler(input)
+      const result = chapter7Handler.run()
+
+      chapter7 = await this.Chapter7.create({
+        inputId,
+        fitData: result
+      })
+    }
+
+    return chapter7
+  }
 }

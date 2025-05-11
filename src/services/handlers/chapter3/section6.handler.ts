@@ -63,8 +63,9 @@ export class Chapter3Section6Handler extends AbstractHandler {
       console.log('sigma:' + sigma)
 
       //truc I
-      const T1 = 174495.2284 //chuong3
+      const T1 = result.chapter1.T_I //chuong3
       const Mtd1 = Math.sqrt(MBx * MBx + MBymax * MBymax + 0.75 * T1 * T1)
+      console.log(MBx, MBymax)
       console.log('Mtd1:' + Mtd1)
 
       const d1 = Math.cbrt(Mtd1 / (0.1 * sigma))
@@ -102,6 +103,12 @@ export class Chapter3Section6Handler extends AbstractHandler {
       console.log('MNx:' + MNx)
       const MNy = l32 * RMx
       const Mtd3 = Math.sqrt(MNx * MNx + MNy * MNy + 0.75 * T3 * T3)
+
+      // console.log({
+      //   l32,
+      //   RMy
+      // })
+
       console.log('Mtd3:' + Mtd3)
 
       const d3 = Math.cbrt(Mtd3 / (0.1 * sigma))

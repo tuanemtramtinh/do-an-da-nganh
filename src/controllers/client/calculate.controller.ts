@@ -104,48 +104,13 @@ export class CalculateController extends Controller {
         return
       }
 
-      console.log(data)
+      // console.log(data)
 
       this.successMessage(res, 'Lấy dữ liệu thành công từ AI', data)
     } catch (error: any) {
       this.failedMessage(res, error.message)
     }
   }
-
-  // public chooseEngine = async (req: Request, res: Response) => {
-  //   const inputId = req.body.inputId
-  //   const result = await this.calculateService.chooseEngine(inputId)
-  //   this.successMessage(res, 'Lưu input và trả ra danh sách động cơ thành công', result)
-  // }
-
-  // public engineCharacteristic = async (req: Request, res: Response) => {
-  //   try {
-  //     const inputId = req.body.inputId
-  //     const engineId = req.body.engineId
-  //     const result = await this.calculateService.engineCharacteristics(inputId, engineId)
-  //     this.successMessage(res, 'Tính toán thành công', result)
-  //   } catch (error: any) {
-  //     this.failedMessage(res, error.message)
-  //   }
-  // }
-
-  // public getChapter1 = async (req: Request, res: Response) => {
-  //   try {
-  //     const inputId = req.query.inputId
-
-  //     if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
-  //       this.failedMessage(res, 'Invalid inputId')
-  //       return
-  //     }
-
-  //     const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
-
-  //     const result = await this.calculateService.getChapter1(inputObjectId)
-  //     this.successMessage(res, 'Lấy chương 1 thành công', result)
-  //   } catch (error: any) {
-  //     this.failedMessage(res, error.message)
-  //   }
-  // }
 
   public handleChapter1 = async (req: Request, res: Response) => {
     try {
@@ -209,6 +174,78 @@ export class CalculateController extends Controller {
       const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
       const result = await this.calculateService.handleChapter3(inputObjectId, lm12, lm22, lm23, lm34, lm33, F_nt)
       this.successMessage(res, 'Tính toán chương 3 thành công', result)
+    } catch (error: any) {
+      this.failedMessage(res, error.message)
+    }
+  }
+
+  public handleChapter4 = async (req: Request, res: Response) => {
+    try {
+      const inputId = req.query.inputId
+
+      if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
+        this.failedMessage(res, 'Invalid inputId')
+        return
+      }
+
+      const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
+
+      const result = await this.calculateService.handleChapter4(inputObjectId)
+      this.successMessage(res, 'Tính toán chương 4 thành công', result)
+    } catch (error: any) {
+      this.failedMessage(res, error.message)
+    }
+  }
+
+  public handleChapter5 = async (req: Request, res: Response) => {
+    try {
+      const inputId = req.query.inputId
+
+      if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
+        this.failedMessage(res, 'Invalid inputId')
+        return
+      }
+
+      const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
+
+      const result = await this.calculateService.handleChapter5(inputObjectId)
+      this.successMessage(res, 'Tính toán chương 5 thành công', result)
+    } catch (error: any) {
+      this.failedMessage(res, error.message)
+    }
+  }
+
+  public handleChapter6 = async (req: Request, res: Response) => {
+    try {
+      const inputId = req.query.inputId
+
+      if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
+        this.failedMessage(res, 'Invalid inputId')
+        return
+      }
+
+      const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
+
+      const result = await this.calculateService.handleChapter6(inputObjectId)
+      this.successMessage(res, 'Tính toán chương 6 thành công', result)
+    } catch (error: any) {
+      this.failedMessage(res, error.message)
+    }
+  }
+
+  public handleChapter7 = async (req: Request, res: Response) => {
+    try {
+      const inputId = req.query.inputId
+
+      if (typeof inputId !== 'string' || !mongoose.Types.ObjectId.isValid(inputId)) {
+        this.failedMessage(res, 'Invalid inputId')
+        return
+      }
+
+      const inputObjectId: mongoose.Types.ObjectId = new mongoose.Types.ObjectId(inputId)
+
+      const result = await this.calculateService.handleChapter7(inputObjectId)
+      this.successMessage(res, 'Tính toán chương 7 thành công', result)
     } catch (error: any) {
       this.failedMessage(res, error.message)
     }

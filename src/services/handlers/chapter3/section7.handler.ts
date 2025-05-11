@@ -487,6 +487,8 @@ export class Chapter3Section7Handler extends AbstractHandler {
       const WF0 = (Math.PI * dsb2 ** 3) / 16 - (bF * t1F * (dsb2 - t1F) ** 2) / dsb2
       const WN0 = (Math.PI * dsb3 ** 3) / 16 - (bN * t1N * (dsb3 - t1N) ** 2) / dsb3
 
+      // console.log(Mtd1, Mtd2, Mtd3)
+
       const usaB = Mtd1 / WB
       const usaF = Mtd2 / WF
       const usaN = Mtd3 / WN

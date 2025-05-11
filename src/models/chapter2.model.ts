@@ -48,7 +48,8 @@ const chapter2Schema = new Schema<any>(
       Fr1: Number,
       Ft1: Number,
       Ft2: Number
-    }
+    },
+    aw_test: Number
   },
   {
     timestamps: true

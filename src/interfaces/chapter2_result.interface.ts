@@ -52,6 +52,7 @@ export interface IChapter2Result {
   beltParamaters: IBeltParameters
   gearSpecification: IGearSpecification
   sizeOfTranmission: ISizeOfTransmission
+  aw_test: number
   createdAt?: Date
   updatedAt?: Date
 }

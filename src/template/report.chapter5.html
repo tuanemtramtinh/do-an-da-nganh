@@ -1,0 +1,514 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo Cáo</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: white;
+    }
+
+    .header,
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #f4f4f4;
+      position: fixed;
+      width: 210mm;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .header {
+      top: 0;
+    }
+
+    .footer {
+      bottom: 0;
+    }
+
+    .report-container {
+      width: 190mm;
+      margin: 60px auto 60px;
+      padding: 10mm;
+      background: white;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    h1 {
+      font-size: 18pt;
+    }
+
+    h2 {
+      font-size: 14pt;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10pt;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #000;
+      text-align: left;
+      padding: 4px;
+    }
+
+    th {
+      white-space: nowrap;
+      background-color: #f8f8f8;
+      font-weight: bold;
+    }
+
+    td {
+      word-break: break-word;
+    }
+
+    @media print {
+      body {
+        width: 210mm;
+        height: 297mm;
+      }
+
+      .header,
+      .footer {
+        position: fixed;
+        width: 210mm;
+      }
+
+      .report-container {
+        width: 190mm;
+        margin: 60px auto 60px;
+        padding: 10mm;
+      }
+
+      .table-container {
+        overflow-x: visible;
+      }
+
+      table {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h2>Công ty Partify - Báo Cáo Kỹ Thuật</h2>
+  </div>
+
+  <div class="report-container">
+    <h1>BÁO CÁO</h1>
+    <h2>Chương 5: Kết cấu vỏ hộp</h2>
+
+    <h2>5.1. Quan hệ kích thước các phần tử cấu tạo nên hộp số đúc</h2>
+    <div class="table-container">
+      <table class="first">
+        <thead>
+          <tr>
+            <th>Tên gọi</th>
+            <th>Biểu thức tính toán</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Thân hộp δ</td>
+            <td>{{thanHop_o}} mm</td>
+          </tr>
+          <tr>
+            <td>Nắp hộp δ<sub>1</sub></td>
+            <td>{{napHop_o1}} mm</td>
+          </tr>
+          <tr>
+            <td>Chiều dài gân e</td>
+            <td>{{chieuDaiGan_e}} mm</td>
+          </tr>
+          <tr>
+            <td>Chiều cao gân h</td>
+            <td>{{chieuCaoGan_h}} mm</td>
+          </tr>
+          <tr>
+            <td>Độ dốc</td>
+            <td>Khoảng 2°</td>
+          </tr>
+          <tr>
+            <td>Đường kính bulong nền d<sub>1</sub></td>
+            <td>{{duongKinhBulongNen_d1}} mm</td>
+          </tr>
+          <tr>
+            <td>Đường kính bulong cạnh ổ d<sub>2</sub></td>
+            <td>{{duongKinhBulongNen_d2}} mm (Bulong M20)</td>
+          </tr>
+          <tr>
+            <td>Đường kính bulong ghép bích nắp và thân d<sub>3</sub></td>
+            <td>{{duongKinhBulongNapVaThan_d3}} mm (Bulong M18)</td>
+          </tr>
+          <tr>
+            <td>Đường kính vít ghép nắp ổ d<sub>4</sub></td>
+            <td>{{duongKinhBulongNapO_d4}} mm (Bulong M12)</td>
+          </tr>
+          <tr>
+            <td>Đường kính vít ghép nắp cửa thăm d<sub>5</sub></td>
+            <td>{{duongKinhBulongNapCuaTham_d5}} mm (Bulong M12)</td>
+          </tr>
+          <tr>
+            <td>Đường kính tâm lỗ vít D<sub>3</sub></td>
+            <td>{{duongKinhNgoaiLoVit_D3}} mm</td>
+          </tr>
+          <tr>
+            <td>Đường kính ngoài D<sub>2</sub></td>
+            <td>{{duongKinhTamLoVit_D2}} mm</td>
+          </tr>
+          <tr>
+            <td>Bề rộng mặt lắp ghép bulong cạnh ổ K<sub>2</sub></td>
+            <td>{{beRongMatLapGhep_K2}} mm</td>
+          </tr>
+          <tr>
+            <td>Tâm lỗ bulong cạnh ổ E<sub>2</sub> và C</td>
+            <td>E<sub>2</sub> = {{tamLoBulongCanhLo_E2}} mm, C = {{duongKinhNgoaiLoVit_D3/2}} mm</td>
+          </tr>
+          <tr>
+            <td>Chiều cao h</td>
+            <td>h xác định theo kết cấu, phụ thuộc tâm lỗ bulong và kích thước mặt tựa</td>
+          </tr>
+          <tr>
+            <td>Chiều dày bích thân hộp S<sub>3</sub></td>
+            <td>{{chieuDayBichThanHop_S3}} mm</td>
+          </tr>
+          <tr>
+            <td>Chiều dày bích nắp hộp S<sub>4</sub></td>
+            <td>{{chieuDayBichNapHop_S4}} mm</td>
+          </tr>
+          <tr>
+            <td>Bề rộng bích nắp hộp K<sub>3</sub></td>
+            <td>{{beRongBichNapHop_K3}} mm</td>
+          </tr>
+          <tr>
+            <td>Mặt đế chiều dày khi không có phần lồi S<sub>1</sub></td>
+            <td>{{chieuDayMatDeKoCoPhanLoi_S1}} mm</td>
+          </tr>
+          <tr>
+            <td>Mặt đế chiều dày khi có phần lồi D<sub>d</sub>; S<sub>1</sub>; S<sub>2</sub></td>
+            <td>D<sub>d</sub> được xác định theo đường kính dao khoét; S<sub>1</sub> = {{chieuDayMatDeCoPhanLoi_S1Loi}} mm; S<sub>2</sub> = {{chieuDayMatDeCoPhanLoi_S2Loi}} mm</td>
+          </tr>
+          <tr>
+            <td>Khe hở giữa các chi tiết giữa bánh răng và thành trong hộp</td>
+            <td>{{kheHoGiuaBanhRangVaThanhTrongHop_denta}} mm</td>
+          </tr>
+          <tr>
+            <td>Khe hở giữa các chi tiết đỉnh răng bánh lớn với đáy hộp</td>
+            <td>{{kheHoGiuaDinhBanhRangLonVoiDayHop_denta1}} mm</td>
+          </tr>
+          <tr>
+            <td>Khe hở giữa các chi tiết giữa mặt bên các chi tiết quay với nhau</td>
+            <td>{{kheHoGiuaMatBenCacChiTiet_denta2}} mm</td>
+          </tr>
+          <tr>
+            <td>Số lượng bulong trên nền Z</td>
+            <td>Z = {{soLuongBuLongTrenNen_Z}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+    <h2>5.2. Kích thước nắp quan sát</h2>
+    <div class="table-container">
+      <table class="second">
+        <thead>
+          <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>A<sub>1</sub></th>
+            <th>B<sub>1</sub></th>
+            <th>C</th>
+            <th>C<sub>1</sub></th>
+            <th>K</th>
+            <th>R</th>
+            <th>Vít</th>
+            <th>Số lượng</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{kichthuocnapquansat.A}}</td>
+            <td>{{kichthuocnapquansat.B}}</td>
+            <td>{{kichthuocnapquansat.A1}}</td>
+            <td>{{kichthuocnapquansat.B1}}</td>
+            <td>{{kichthuocnapquansat.C}}</td>
+            <td>{{kichthuocnapquansat.C1}}</td>
+            <td>{{kichthuocnapquansat.K}}</td>
+            <td>{{kichthuocnapquansat.R}}</td>
+            <td>{{kichthuocnapquansat.Vit}}</td>
+            <td>{{kichthuocnapquansat.Soluong}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>5.3. Hình dạng và kích thước nút thông hơi</h2>
+    <div class="table-container">
+      <table class="third">
+        <thead>
+          <tr>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>E</th>
+            <th>G</th>
+            <th>H</th>
+            <th>I</th>
+            <th>K</th>
+            <th>L</th>
+            <th>M</th>
+            <th>N</th>
+            <th>O</th>
+            <th>P</th>
+            <th>Q</th>
+            <th>R</th>
+            <th>S</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{kichthuocnutthonghoi.A}}</td>
+            <td>{{kichthuocnutthonghoi.B}}</td>
+            <td>{{kichthuocnutthonghoi.C}}</td>
+            <td>{{kichthuocnutthonghoi.D}}</td>
+            <td>{{kichthuocnutthonghoi.E}}</td>
+            <td>{{kichthuocnutthonghoi.G}}</td>
+            <td>{{kichthuocnutthonghoi.H}}</td>
+            <td>{{kichthuocnutthonghoi.I}}</td>
+            <td>{{kichthuocnutthonghoi.K}}</td>
+            <td>{{kichthuocnutthonghoi.L}}</td>
+            <td>{{kichthuocnutthonghoi.M}}</td>
+            <td>{{kichthuocnutthonghoi.N}}</td>
+            <td>{{kichthuocnutthonghoi.O}}</td>
+            <td>{{kichthuocnutthonghoi.P}}</td>
+            <td>{{kichthuocnutthonghoi.Q}}</td>
+            <td>{{kichthuocnutthonghoi.R}}</td>
+            <td>{{kichthuocnutthonghoi.S}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>5.4. Hình dạng và kích thước nút tháo dầu trụ</h2>
+    <div class="table-container">
+      <table class="fourth">
+        <thead>
+          <tr>
+            <th>d</th>
+            <th>b</th>
+            <th>m</th>
+            <th>f</th>
+            <th>L</th>
+            <th>c</th>
+            <th>q</th>
+            <th>D</th>
+            <th>S</th>
+            <th>D<sub>0</sub></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{kichthuocnutthaodau.d}}</td>
+            <td>{{kichthuocnutthaodau.b}}</td>
+            <td>{{kichthuocnutthaodau.m}}</td>
+            <td>{{kichthuocnutthaodau.f}}</td>
+            <td>{{kichthuocnutthaodau.L}}</td>
+            <td>{{kichthuocnutthaodau.c}}</td>
+            <td>{{kichthuocnutthaodau.q}}</td>
+            <td>{{kichthuocnutthaodau.D}}</td>
+            <td>{{kichthuocnutthaodau.S}}</td>
+            <td>{{kichthuocnutthaodau.D0}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>5.5. Đường kính lỗ lắp ống lót</h2>
+    <div class="table-container">
+      <table class="fifth">
+        <thead>
+          <tr>
+            <th>Trục I</th>
+            <th>D = D + 2 * δ</th>
+            <th>D<sub>2</sub> = D' + (1.6 2) * d<sub>4</sub></th>
+            <th>D<sub>3</sub> = D' + 4.4 * d<sub>4</sub></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{trucI.truc}}</td>
+            <td>{{trucI.D}}</td>
+            <td>{{trucI.D2}}</td>
+            <td>{{trucI.D3}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>5.6. Kích thước bulong vòng, đơn vị mm</h2>
+    <div class="table-container">
+      <table class="sixth">
+        <thead>
+          <tr>
+            <th>d</th>
+            <th>d<sub>1</sub></th>
+            <th>d<sub>2</sub></th>
+            <th>d<sub>3</sub></th>
+            <th>d<sub>4</sub></th>
+            <th>d<sub>5</sub></th>
+            <th>h</th>
+            <th>h<sub>1</sub></th>
+            <th>h<sub>2</sub></th>
+            <th>I</th>
+            <th>f</th>
+            <th>b</th>
+            <th>c</th>
+            <th>x</th>
+            <th>r</th>
+            <th>r<sub>1</sub></th>
+            <th>r<sub>2</sub></th>
+            <th>Trọng lượng nâng được</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{kichthuocbulong.d}}</td>
+            <td>{{kichthuocbulong.d1}}</td>
+            <td>{{kichthuocbulong.d2}}</td>
+            <td>{{kichthuocbulong.d3}}</td>
+            <td>{{kichthuocbulong.d4}}</td>
+            <td>{{kichthuocbulong.d5}}</td>
+            <td>{{kichthuocbulong.h}}</td>
+            <td>{{kichthuocbulong.h1}}</td>
+            <td>{{kichthuocbulong.h2}}</td>
+            <td>{{kichthuocbulong.I}}</td>
+            <td>{{kichthuocbulong.f}}</td>
+            <td>{{kichthuocbulong.b}}</td>
+            <td>{{kichthuocbulong.c}}</td>
+            <td>{{kichthuocbulong.x}}</td>
+            <td>{{kichthuocbulong.r}}</td>
+            <td>{{kichthuocbulong.r1}}</td>
+            <td>{{kichthuocbulong.r2}}</td>
+            <td>a = {{kichthuocbulong.trongluong.a}}, b = {{kichthuocbulong.trongluong.b}}, c = {{kichthuocbulong.trongluong.c}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>5.7. Kích thước cơ bản của nối trục đàn hồi, đơn vị là mm</h2>
+    <div class="table-container">
+      <table class="seventh">
+        <thead>
+          <tr>
+            <th>T(mm)</th>
+            <th>d</th>
+            <th>D</th>
+            <th>d<sub>m</sub></th>
+            <th>L</th>
+            <th>I</th>
+            <th>d<sub>1</sub></th>
+            <th>D<sub>0</sub></th>
+            <th>Z</th>
+            <th>n<sub>max</sub></th>
+            <th>B</th>
+            <th>B<sub>1</sub></th>
+            <th>I<sub>1</sub></th>
+            <th>D<sub>3</sub></th>
+            <th>I<sub>2</sub></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{kichthuocnoitrucdanhoi.T}}</td>
+            <td>{{kichthuocnoitrucdanhoi.d}}</td>
+            <td>{{kichthuocnoitrucdanhoi.D}}</td>
+            <td>{{kichthuocnoitrucdanhoi.dm}}</td>
+            <td>{{kichthuocnoitrucdanhoi.L}}</td>
+            <td>{{kichthuocnoitrucdanhoi.I}}</td>
+            <td>{{kichthuocnoitrucdanhoi.d1}}</td>
+            <td>{{kichthuocnoitrucdanhoi.Do}}</td>
+            <td>{{kichthuocnoitrucdanhoi.Z}}</td>
+            <td>{{kichthuocnoitrucdanhoi.nmax}}</td>
+            <td>{{kichthuocnoitrucdanhoi.B}}</td>
+            <td>{{kichthuocnoitrucdanhoi.B1}}</td>
+            <td>{{kichthuocnoitrucdanhoi.I1}}</td>
+            <td>{{kichthuocnoitrucdanhoi.D3}}</td>
+            <td>{{kichthuocnoitrucdanhoi.I2}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h2>5.8. Kích thước cơ bản của vòng đàn hồi, đơn vị là mm</h2>
+    <div class="table-container">
+      <table class="eighth">
+        <thead>
+          <tr>
+            <th>T(mm)</th>
+            <th>d<sub>e</sub></th>
+            <th>d<sub>1</sub></th>
+            <th>D<sub>2</sub></th>
+            <th>I</th>
+            <th>I<sub>1</sub></th>
+            <th>I<sub>2</sub></th>
+            <th>h</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{kichthuocvongdanhoi.T}}</td>
+            <td>{{kichthuocvongdanhoi.de}}</td>
+            <td>{{kichthuocvongdanhoi.d1}}</td>
+            <td>{{kichthuocvongdanhoi.D2}}</td>
+            <td>{{kichthuocvongdanhoi.I}}</td>
+            <td>{{kichthuocvongdanhoi.I1}}</td>
+            <td>{{kichthuocvongdanhoi.I2}}</td>
+            <td>{{kichthuocvongdanhoi.h}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="footer">
+    <p>© 2025 Công ty Partify - Mọi quyền được bảo lưu.</p>
+  </div>
+</body>
+
+</html>

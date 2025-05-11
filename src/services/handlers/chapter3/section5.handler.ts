@@ -30,6 +30,13 @@ export class Chapter3Section5Handler extends AbstractHandler {
       const l13 = chapter3.trucI_l13 //chuong3
 
       const Rcy = (Fr1 * l13 + Ma1) / l11
+      // console.log({
+      //   Fr1,
+      //   Ma1,
+      //   l11,
+      //   l13,
+      //   Rcy
+      // })
       console.log('Rcy:' + Rcy)
 
       const RAy = Fr1 - Rcy
@@ -104,13 +111,20 @@ export class Chapter3Section5Handler extends AbstractHandler {
             Ma2,
             MBx,
             MBymax,
+            RGx,
             RGy,
             RDx,
             RDy,
             RMx,
             RMy,
             Ft4,
-            MAx
+            MAx,
+            RAx,
+            RAy,
+            RCy: Rcy,
+            RCx: Rcx,
+            RLx,
+            RLy
           }
         },
         request

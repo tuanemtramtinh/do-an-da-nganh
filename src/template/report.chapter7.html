@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo Cáo</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      position: relative;
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      background: white;
+    }
+
+    .header,
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #f4f4f4;
+      position: fixed;
+      width: 210mm;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .header {
+      top: 0;
+    }
+
+    .footer {
+      bottom: 0;
+    }
+
+    .report-container {
+      width: 190mm;
+      margin: 60px auto 60px;
+      padding: 10mm;
+      background: white;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+      margin: 10px 0;
+    }
+
+    h1 {
+      font-size: 18pt;
+    }
+
+    h2 {
+      font-size: 14pt;
+    }
+
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 10px 0;
+      page-break-inside: avoid;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10pt;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #000;
+      text-align: left;
+      padding: 4px;
+    }
+
+    th {
+      white-space: nowrap;
+      background-color: #f8f8f8;
+      font-weight: bold;
+    }
+
+    td {
+      word-break: break-word;
+    }
+
+    @media print {
+      body {
+        width: 210mm;
+        height: 297mm;
+      }
+
+      .header,
+      .footer {
+        position: fixed;
+        width: 210mm;
+      }
+
+      .report-container {
+        width: 190mm;
+        margin: 60px auto 60px;
+        padding: 10mm;
+      }
+
+      .table-container {
+        overflow-x: visible;
+      }
+
+      table {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h2>Công ty Partify - Báo Cáo Kỹ Thuật</h2>
+  </div>
+
+  <div class="report-container">
+    <h1>BÁO CÁO</h1>
+    <h2>Chương 7: Xác định và chọn các kiểu lắp</h2>
+
+    <div class="table-container">
+      <table class="first">
+        <thead>
+          <tr>
+            <th rowspan="2">STT</th>
+            <th rowspan="2">Kiểu lắp</th>
+            <th colspan="2">Trục 1</th>
+            <th colspan="2">Trục 2</th>
+            <th colspan="2">Trục 3</th>
+          </tr>
+          <tr>
+            <th>Kiểu lắp</th>
+            <th>Dung sai (mm)</th>
+            <th>Kiểu lắp</th>
+            <th>Dung sai (mm)</th>
+            <th>Kiểu lắp</th>
+            <th>Dung sai (mm)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{this.stt}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.shaft1Fit}}</td>
+            <td>{{this.shaft1Tolerance}}</td>
+            <td>{{this.shaft2Fit}}</td>
+            <td>{{this.shaft2Tolerance}}</td>
+            <td>{{this.shaft3Fit}}</td>
+            <td>{{this.shaft3Tolerance}}</td>
+          </tr>
+          <tr>
+            <td>{{this.stt}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.shaft1Fit}}</td>
+            <td>{{this.shaft1Tolerance}}</td>
+            <td>{{this.shaft2Fit}}</td>
+            <td>{{this.shaft2Tolerance}}</td>
+            <td>{{this.shaft3Fit}}</td>
+            <td>{{this.shaft3Tolerance}}</td>
+          </tr>
+          <tr>
+            <td>{{this.stt}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.shaft1Fit}}</td>
+            <td>{{this.shaft1Tolerance}}</td>
+            <td>{{this.shaft2Fit}}</td>
+            <td>{{this.shaft2Tolerance}}</td>
+            <td>{{this.shaft3Fit}}</td>
+            <td>{{this.shaft3Tolerance}}</td>
+          </tr>
+          <tr>
+            <td>{{this.stt}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.shaft1Fit}}</td>
+            <td>{{this.shaft1Tolerance}}</td>
+            <td>{{this.shaft2Fit}}</td>
+            <td>{{this.shaft2Tolerance}}</td>
+            <td>{{this.shaft3Fit}}</td>
+            <td>{{this.shaft3Tolerance}}</td>
+          </tr>
+          <tr>
+            <td>{{this.stt}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.shaft1Fit}}</td>
+            <td>{{this.shaft1Tolerance}}</td>
+            <td>{{this.shaft2Fit}}</td>
+            <td>{{this.shaft2Tolerance}}</td>
+            <td>{{this.shaft3Fit}}</td>
+            <td>{{this.shaft3Tolerance}}</td>
+          </tr>
+          <tr>
+            <td>{{this.stt}}</td>
+            <td>{{this.type}}</td>
+            <td>{{this.shaft1Fit}}</td>
+            <td>{{this.shaft1Tolerance}}</td>
+            <td>{{this.shaft2Fit}}</td>
+            <td>{{this.shaft2Tolerance}}</td>
+            <td>{{this.shaft3Fit}}</td>
+            <td>{{this.shaft3Tolerance}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  <div class="footer">
+    <p>© 2025 Công ty Partify - Mọi quyền được bảo lưu.</p>
+  </div>
+</body>
+
+</html>

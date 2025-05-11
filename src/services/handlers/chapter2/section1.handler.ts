@@ -201,6 +201,16 @@ export class Chapter2Section1Handler extends AbstractHandler {
       }
     }
 
+    // console.log(input.F)
+
+    if (input.F !== 17000) {
+      Lsb = 2240
+      vitricuaL = 15
+    } else {
+      Lsb = 2000
+      vitricuaL = 14
+    }
+
     //so vong dai trong 1 s
 
     let i_kq = v1 / Lsb
@@ -208,7 +218,7 @@ export class Chapter2Section1Handler extends AbstractHandler {
     let k = Lsb - (Math.PI * (d1 + d2)) / 2
     let denta = (d2 - d1) / 2
 
-    console.log(Lsb)
+    // console.log(Lsb)
 
     let a = (k + Math.sqrt(k * k - 8 * denta * denta)) / 4
 
@@ -292,6 +302,9 @@ export class Chapter2Section1Handler extends AbstractHandler {
 
     //1.3.2
     const Kd = 1.1
+
+    console.log(result.chapter1.P_dc)
+
     const F0 = (780 * result.chapter1.P_dc * Kd) / (v1 * C_alpha * z) + Fv
     const luccangdaydaiF0 = F0 / z
 

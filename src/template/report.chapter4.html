@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo Cáo</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 20px;
+      position: relative;
+    }
+
+    .header,
+    .footer {
+      text-align: center;
+      padding: 10px;
+      background-color: #f4f4f4;
+      position: fixed;
+      width: 100%;
+    }
+
+    .header {
+      top: 0;
+      left: 0;
+    }
+
+    .footer {
+      bottom: 0;
+      left: 0;
+    }
+
+    .report-container {
+      max-width: 800px;
+      margin: 60px auto 60px;
+      padding: 20px;
+      border: 1px solid #ddd;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      background: white;
+    }
+
+    h1,
+    h2 {
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid #ddd;
+      text-align: left;
+      padding: 8px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="header">
+    <h2>Công ty Partify - Báo Cáo Kỹ Thuật</h2>
+  </div>
+
+  <div class="report-container">
+    <h1>BÁO CÁO</h1>
+    <h2>Chương 4: Tính toán và chọn ổ lăn</h2>
+    <h2>4.1. Chọn ổ lăn cho trục I tại vị trí A</h2>
+    <table class="first">
+      <thead>
+        <tr>
+          <th>Kí hiệu</th>
+          <th>d</th>
+          <th>D</th>
+          <th>D₁</th>
+          <th>d₁</th>
+          <th>B</th>
+          <th>C₁</th>
+          <th>T</th>
+          <th>r</th>
+          <th>r₁</th>
+          <th>α</th>
+          <th>C</th>
+          <th>C₀</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{code}}</td>
+          <td>{{d}}</td>
+          <td>{{D}}</td>
+          <td>{{D1}}</td>
+          <td>{{d1}}</td>
+          <td>{{B}}</td>
+          <td>{{C1}}</td>
+          <td>{{T}}</td>
+          <td>{{r}}</td>
+          <td>{{r1}}</td>
+          <td>{{alpha}}</td>
+          <td>{{C}}</td>
+          <td>{{C0}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4.2. Chọn ổ lăn cho trục I tại vị trí C</h2>
+    <table class="second">
+      <thead>
+        <tr>
+          <th>Kí hiệu</th>
+          <th>d</th>
+          <th>D</th>
+          <th>B</th>
+          <th>r</th>
+          <th>r₁</th>
+          <th>C</th>
+          <th>C₀</th>
+          <th>Đường kính chiều dài con lăn</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{code}}</td>
+          <td>{{d}}</td>
+          <td>{{D}}</td>
+          <td>{{B}}</td>
+          <td>{{r}}</td>
+          <td>{{r1}}</td>
+          <td>{{C}}</td>
+          <td>{{C0}}</td>
+          <td>{{rollerDiameter}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4.3. Chọn ổ lăn cho trục II</h2>
+    <table class="third">
+      <thead>
+        <tr>
+          <th>Kí hiệu</th>
+          <th>d</th>
+          <th>D</th>
+          <th>D₁</th>
+          <th>d₁</th>
+          <th>B</th>
+          <th>C₁</th>
+          <th>T</th>
+          <th>r</th>
+          <th>r₁</th>
+          <th>α</th>
+          <th>C</th>
+          <th>C₀</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{code}}</td>
+          <td>{{d}}</td>
+          <td>{{D}}</td>
+          <td>{{D1}}</td>
+          <td>{{d1}}</td>
+          <td>{{B}}</td>
+          <td>{{C1}}</td>
+          <td>{{T}}</td>
+          <td>{{r}}</td>
+          <td>{{r1}}</td>
+          <td>{{alpha}}</td>
+          <td>{{C}}</td>
+          <td>{{C0}}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>4.4. Chọn ổ lăn cho trục III</h2>
+    <table class="fourth">
+      <thead>
+        <tr>
+          <th>Kí hiệu</th>
+          <th>d</th>
+          <th>D</th>
+          <th>B</th>
+          <th>r</th>
+          <th>Đường kính bi</th>
+          <th>C</th>
+          <th>C₀</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{code}}</td>
+          <td>{{d}}</td>
+          <td>{{D}}</td>
+          <td>{{B}}</td>
+          <td>{{r}}</td>
+          <td>{{ballDiameter}}</td>
+          <td>{{C}}</td>
+          <td>{{C0}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer">
+    <p> 2025 Công ty Partify - Mọi quyền được bảo lưu.</p>
+  </div>
+</body>
+
+</html>

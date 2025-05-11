@@ -256,7 +256,8 @@ export class Chapter2Section3Handler extends AbstractHandler {
         df1,
         df2,
         da1,
-        da2
+        da2,
+        aw_test
       }
     }
 
@@ -456,7 +457,8 @@ export class Chapter2Section3Handler extends AbstractHandler {
       df1,
       df2,
       da1,
-      da2
+      da2,
+      aw_test
     } = section3_4(aw)
     const { F, g0, v, bw } = section3_5(m, ba, B, at, atw, awx, dw1, dw2, epsilona, KHB)
     section3_6(epsilona, x1, x2, z1, z2, F, g0, v, awx, bw, dw1, m)
@@ -478,7 +480,8 @@ export class Chapter2Section3Handler extends AbstractHandler {
       input,
       {
         ...result,
-        gearSpecification
+        gearSpecification,
+        aw_test
       },
       request
     )
